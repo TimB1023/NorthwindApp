@@ -8,7 +8,6 @@ namespace NorthwindLibrary
 {
     public class Customer
     {
-        public string Field { get; set; }
         public string CustomerID { get; set; }
         public string CompanyName { get; set; }
         public string ContactName { get; set; }
@@ -20,5 +19,10 @@ namespace NorthwindLibrary
         public string Country { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
+        public string customerDisplayName 
+        {
+            get
+            { return $"{CompanyName} ({CustomerID})"; }
+        }
     }
 }
