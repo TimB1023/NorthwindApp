@@ -23,8 +23,8 @@ namespace NorthwindUI
 
         private void updateSearchResultsList()
         {
-            DataAccess db = new DataAccess();
-            customers = db.GetCustomers(customerNameTextBox.Text);
+            //DataAccess db = new DataAccess();
+            //customers = db.GetCustomers(customerNameTextBox.Text);
             customersFoundListBox.DataSource = customers;
             customersFoundListBox.DisplayMember = "customerDisplayName"; //Defined in Customer class
         }
@@ -34,14 +34,15 @@ namespace NorthwindUI
             if (customerNameTextBox.Text.Length >1) //Needs at least two characters
             {
                 DataAccess db = new NorthwindLibrary.DataAccess();
+                customers = db.GetCustomers(customerNameTextBox.Text);
                 updateSearchResultsList();
             }
         }
 
-        private void searchButtom_Click(object sender, EventArgs e)
-        {
-            searchByPartialName();
-        }
+        //private void searchButtom_Click(object sender, EventArgs e)
+        //{
+        //    searchByPartialName();
+        //}
 
         private void customerNameTextBox_TextChanged(object sender, EventArgs e)
         {
