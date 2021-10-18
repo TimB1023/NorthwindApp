@@ -18,15 +18,34 @@ namespace NorthwindUI
         public CustomerForm()
         {
             InitializeComponent();
+            updateSearchResultsList();
+        }
+
+        private void updateSearchResultsList()
+        {
+            DataAccess db = new DataAccess();
+            customers = db.GetCustomers(customerNameTextBox.Text);
             customersFoundListBox.DataSource = customers;
             customersFoundListBox.DisplayMember = "customerDisplayName"; //Defined in Customer class
         }
 
+        private void searchByPartialName()
+        {
+            if (customerNameTextBox.Text.Length >1) //Needs at least two characters
+            {
+                DataAccess db = new NorthwindLibrary.DataAccess();
+                updateSearchResultsList();
+            }
+        }
+
         private void searchButtom_Click(object sender, EventArgs e)
         {
-            DataAccess db = new NorthwindLibrary.DataAccess();
-            customers = db.GetCustomers(customerNameTextBox.Text.ToLower());
-            customersFoundListBox.DataSource = customers;
+            searchByPartialName();
+        }
+
+        private void customerNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            searchByPartialName();
         }
     }
 }

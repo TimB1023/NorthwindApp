@@ -21,7 +21,7 @@ namespace NorthwindLibrary
 
             {
                 string queryString = "'%" + CustomerName + "%'";
-                var output = connection.Query<Customer>($"SELECT * from dbo.Customers where CompanyName like {CustomerName};").ToList();
+                var output = connection.Query<Customer>($"SELECT * from dbo.Customers where CompanyName like {queryString};").ToList();
                 return output;
                 //Returns iNumerable of type Customer, therefore .ToList needed
             }; //Connection is closed at this point because of using statement

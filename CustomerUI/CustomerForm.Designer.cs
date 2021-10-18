@@ -50,6 +50,7 @@ namespace NorthwindUI
             this.customerNameTextBox.Name = "customerNameTextBox";
             this.customerNameTextBox.Size = new System.Drawing.Size(168, 33);
             this.customerNameTextBox.TabIndex = 1;
+            this.customerNameTextBox.TextChanged += new System.EventHandler(this.customerNameTextBox_TextChanged);
             // 
             // enterCustomerNameLabel
             // 
