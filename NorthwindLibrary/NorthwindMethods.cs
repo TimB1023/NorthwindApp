@@ -8,13 +8,8 @@ namespace NorthwindLibrary
 {
     public class NorthwindMethods
     {
-        public static void MyMethod()
-        {
+        
 
-            int a = 5;
-            a += 1;
-
-        }
 
     }
 }
