@@ -24,5 +24,6 @@ namespace NorthwindLibrary
             get
             { return $"{CompanyName} ({CustomerID})"; }
         }
+        public decimal OrdersToDate { get; set; }
     }
 }

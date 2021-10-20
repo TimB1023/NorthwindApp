@@ -19,7 +19,6 @@ namespace NorthwindLibrary
                     //"opens the door" to the database so that the next part can request data
                 (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionHelper.CnnVal("NorthwindDB")))
 
-
             {
                 //Old direct SQL 
                 //string queryString = "'%" + customerName + "%'"; //customerName was previously the passed in parameter
@@ -34,6 +33,26 @@ namespace NorthwindLibrary
                 return output;
                 //Returns iNumerable of type Customer, therefore .ToList needed
             }; //Connection is closed at this point because of using statement
+        }
+
+        public List<Order> GetOrdersByCustomerID(string customerID)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionHelper.CnnVal("NorthwindDB")))
+            {
+                var output = connection.Query<Order>("dbo.GetCustomerOrdersByCustomerID @CustomerID", new { CustomerID = customerID }).ToList();
+                return output;
+            }
+        }
+        public decimal GetSumOfOrdersByCustomerID(string customerID)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionHelper.CnnVal("NorthwindDB")))
+            {
+                decimal output = connection.Query<Decimal>("dbo.GetSumSalesByCustomerID @CustomerID", new { CustomerID = customerID }).FirstOrDefault();
+                // The part in <> says the type you want back
+                // Returns iEnumerable (multiple values). As we know that there will only be one return, we can use .First)
+                return output;
+            };
+
         }
     }
 }

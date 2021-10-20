@@ -11,5 +11,24 @@ namespace NorthwindLibrary
         
 
 
+        public static decimal SumOfOrdersByCustomerID(string CustomerID)
+        {
+            List<Order> selectedCustomerOrders = new();
+            decimal sumOfOrders = 0;
+
+            DataAccess db = new NorthwindLibrary.DataAccess();
+            selectedCustomerOrders = db.GetOrdersByCustomerID(CustomerID).ToList();
+
+            //Old version
+            //foreach(Order order in selectedCustomerOrders)
+            //{
+            //    sumOfOrders += order.ExtendedPrice;
+            //}
+            sumOfOrders = selectedCustomerOrders.Sum(x => x.ExtendedPrice);
+
+            return sumOfOrders;
+        }
+
+
     }
 }

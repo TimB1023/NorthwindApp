@@ -49,6 +49,19 @@ namespace NorthwindUI
             this.countryTextBox = new System.Windows.Forms.TextBox();
             this.phoneLabel = new System.Windows.Forms.Label();
             this.phoneNumberTextBox = new System.Windows.Forms.TextBox();
+            this.ordersToDateSQLLabel = new System.Windows.Forms.Label();
+            this.ordersToDateSQLTextBox = new System.Windows.Forms.TextBox();
+            this.ordersToDateCalcLabel = new System.Windows.Forms.Label();
+            this.ordersToDateCalcTextBox = new System.Windows.Forms.TextBox();
+            this.ordersListView = new System.Windows.Forms.ListView();
+            this.OrderID = new System.Windows.Forms.ColumnHeader();
+            this.ProductName = new System.Windows.Forms.ColumnHeader();
+            this.Quantity = new System.Windows.Forms.ColumnHeader();
+            this.UnitPrice = new System.Windows.Forms.ColumnHeader();
+            this.ExtendedPrice = new System.Windows.Forms.ColumnHeader();
+            this.ordersListLabel = new System.Windows.Forms.Label();
+            this.selectedCustomerLabelOrders = new System.Windows.Forms.Label();
+            this.ordersListCustomerLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // customersFoundListBox
@@ -58,7 +71,7 @@ namespace NorthwindUI
             this.customersFoundListBox.ItemHeight = 21;
             this.customersFoundListBox.Location = new System.Drawing.Point(45, 124);
             this.customersFoundListBox.Name = "customersFoundListBox";
-            this.customersFoundListBox.Size = new System.Drawing.Size(223, 298);
+            this.customersFoundListBox.Size = new System.Drawing.Size(291, 298);
             this.customersFoundListBox.TabIndex = 0;
             this.customersFoundListBox.SelectedValueChanged += new System.EventHandler(this.customersFoundListBox_SelectedItemChanged);
             // 
@@ -66,7 +79,7 @@ namespace NorthwindUI
             // 
             this.customerNameTextBox.Location = new System.Drawing.Point(45, 49);
             this.customerNameTextBox.Name = "customerNameTextBox";
-            this.customerNameTextBox.Size = new System.Drawing.Size(223, 33);
+            this.customerNameTextBox.Size = new System.Drawing.Size(291, 33);
             this.customerNameTextBox.TabIndex = 1;
             this.customerNameTextBox.TextChanged += new System.EventHandler(this.customerNameTextBox_TextChanged);
             // 
@@ -93,7 +106,7 @@ namespace NorthwindUI
             // customerNameHeading
             // 
             this.customerNameHeading.AutoSize = true;
-            this.customerNameHeading.Location = new System.Drawing.Point(311, 28);
+            this.customerNameHeading.Location = new System.Drawing.Point(418, 42);
             this.customerNameHeading.Name = "customerNameHeading";
             this.customerNameHeading.Size = new System.Drawing.Size(169, 25);
             this.customerNameHeading.TabIndex = 3;
@@ -103,7 +116,7 @@ namespace NorthwindUI
             // 
             this.contactLabel.AutoSize = true;
             this.contactLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.contactLabel.Location = new System.Drawing.Point(311, 94);
+            this.contactLabel.Location = new System.Drawing.Point(418, 108);
             this.contactLabel.Name = "contactLabel";
             this.contactLabel.Size = new System.Drawing.Size(63, 21);
             this.contactLabel.TabIndex = 4;
@@ -113,7 +126,7 @@ namespace NorthwindUI
             // contactTextBox
             // 
             this.contactTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.contactTextBox.Location = new System.Drawing.Point(397, 88);
+            this.contactTextBox.Location = new System.Drawing.Point(560, 100);
             this.contactTextBox.Name = "contactTextBox";
             this.contactTextBox.Size = new System.Drawing.Size(289, 29);
             this.contactTextBox.TabIndex = 5;
@@ -121,7 +134,7 @@ namespace NorthwindUI
             // contactTitleTextBox
             // 
             this.contactTitleTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.contactTitleTextBox.Location = new System.Drawing.Point(397, 121);
+            this.contactTitleTextBox.Location = new System.Drawing.Point(560, 133);
             this.contactTitleTextBox.Name = "contactTitleTextBox";
             this.contactTitleTextBox.Size = new System.Drawing.Size(289, 29);
             this.contactTitleTextBox.TabIndex = 5;
@@ -130,7 +143,7 @@ namespace NorthwindUI
             // 
             this.addressLabel.AutoSize = true;
             this.addressLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.addressLabel.Location = new System.Drawing.Point(311, 209);
+            this.addressLabel.Location = new System.Drawing.Point(418, 223);
             this.addressLabel.Name = "addressLabel";
             this.addressLabel.Size = new System.Drawing.Size(66, 21);
             this.addressLabel.TabIndex = 4;
@@ -140,7 +153,7 @@ namespace NorthwindUI
             // addressTextBox
             // 
             this.addressTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.addressTextBox.Location = new System.Drawing.Point(397, 203);
+            this.addressTextBox.Location = new System.Drawing.Point(560, 215);
             this.addressTextBox.Name = "addressTextBox";
             this.addressTextBox.Size = new System.Drawing.Size(289, 29);
             this.addressTextBox.TabIndex = 5;
@@ -149,7 +162,7 @@ namespace NorthwindUI
             // 
             this.cityLabel.AutoSize = true;
             this.cityLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cityLabel.Location = new System.Drawing.Point(311, 248);
+            this.cityLabel.Location = new System.Drawing.Point(418, 262);
             this.cityLabel.Name = "cityLabel";
             this.cityLabel.Size = new System.Drawing.Size(37, 21);
             this.cityLabel.TabIndex = 4;
@@ -159,7 +172,7 @@ namespace NorthwindUI
             // cityTextBox
             // 
             this.cityTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cityTextBox.Location = new System.Drawing.Point(397, 242);
+            this.cityTextBox.Location = new System.Drawing.Point(560, 254);
             this.cityTextBox.Name = "cityTextBox";
             this.cityTextBox.Size = new System.Drawing.Size(289, 29);
             this.cityTextBox.TabIndex = 5;
@@ -168,7 +181,7 @@ namespace NorthwindUI
             // 
             this.regionLabel.AutoSize = true;
             this.regionLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.regionLabel.Location = new System.Drawing.Point(311, 287);
+            this.regionLabel.Location = new System.Drawing.Point(418, 301);
             this.regionLabel.Name = "regionLabel";
             this.regionLabel.Size = new System.Drawing.Size(59, 21);
             this.regionLabel.TabIndex = 4;
@@ -178,7 +191,7 @@ namespace NorthwindUI
             // regionTextBox
             // 
             this.regionTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.regionTextBox.Location = new System.Drawing.Point(397, 281);
+            this.regionTextBox.Location = new System.Drawing.Point(560, 293);
             this.regionTextBox.Name = "regionTextBox";
             this.regionTextBox.Size = new System.Drawing.Size(289, 29);
             this.regionTextBox.TabIndex = 5;
@@ -187,7 +200,7 @@ namespace NorthwindUI
             // 
             this.postcodeLabel.AutoSize = true;
             this.postcodeLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.postcodeLabel.Location = new System.Drawing.Point(311, 326);
+            this.postcodeLabel.Location = new System.Drawing.Point(418, 340);
             this.postcodeLabel.Name = "postcodeLabel";
             this.postcodeLabel.Size = new System.Drawing.Size(72, 21);
             this.postcodeLabel.TabIndex = 4;
@@ -197,7 +210,7 @@ namespace NorthwindUI
             // postcodeTextBox
             // 
             this.postcodeTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.postcodeTextBox.Location = new System.Drawing.Point(397, 320);
+            this.postcodeTextBox.Location = new System.Drawing.Point(560, 332);
             this.postcodeTextBox.Name = "postcodeTextBox";
             this.postcodeTextBox.Size = new System.Drawing.Size(289, 29);
             this.postcodeTextBox.TabIndex = 5;
@@ -206,7 +219,7 @@ namespace NorthwindUI
             // 
             this.countryLabel.AutoSize = true;
             this.countryLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.countryLabel.Location = new System.Drawing.Point(311, 365);
+            this.countryLabel.Location = new System.Drawing.Point(418, 379);
             this.countryLabel.Name = "countryLabel";
             this.countryLabel.Size = new System.Drawing.Size(66, 21);
             this.countryLabel.TabIndex = 4;
@@ -216,7 +229,7 @@ namespace NorthwindUI
             // countryTextBox
             // 
             this.countryTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.countryTextBox.Location = new System.Drawing.Point(397, 359);
+            this.countryTextBox.Location = new System.Drawing.Point(560, 371);
             this.countryTextBox.Name = "countryTextBox";
             this.countryTextBox.Size = new System.Drawing.Size(289, 29);
             this.countryTextBox.TabIndex = 5;
@@ -225,7 +238,7 @@ namespace NorthwindUI
             // 
             this.phoneLabel.AutoSize = true;
             this.phoneLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.phoneLabel.Location = new System.Drawing.Point(311, 169);
+            this.phoneLabel.Location = new System.Drawing.Point(418, 183);
             this.phoneLabel.Name = "phoneLabel";
             this.phoneLabel.Size = new System.Drawing.Size(54, 21);
             this.phoneLabel.TabIndex = 4;
@@ -235,17 +248,131 @@ namespace NorthwindUI
             // phoneNumberTextBox
             // 
             this.phoneNumberTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.phoneNumberTextBox.Location = new System.Drawing.Point(397, 163);
+            this.phoneNumberTextBox.Location = new System.Drawing.Point(560, 175);
             this.phoneNumberTextBox.Name = "phoneNumberTextBox";
             this.phoneNumberTextBox.Size = new System.Drawing.Size(289, 29);
             this.phoneNumberTextBox.TabIndex = 5;
+            // 
+            // ordersToDateSQLLabel
+            // 
+            this.ordersToDateSQLLabel.AutoSize = true;
+            this.ordersToDateSQLLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ordersToDateSQLLabel.Location = new System.Drawing.Point(418, 414);
+            this.ordersToDateSQLLabel.Name = "ordersToDateSQLLabel";
+            this.ordersToDateSQLLabel.Size = new System.Drawing.Size(101, 21);
+            this.ordersToDateSQLLabel.TabIndex = 4;
+            this.ordersToDateSQLLabel.Text = "Orders (SQL)";
+            this.ordersToDateSQLLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ordersToDateSQLTextBox
+            // 
+            this.ordersToDateSQLTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ordersToDateSQLTextBox.Location = new System.Drawing.Point(560, 406);
+            this.ordersToDateSQLTextBox.Name = "ordersToDateSQLTextBox";
+            this.ordersToDateSQLTextBox.Size = new System.Drawing.Size(289, 29);
+            this.ordersToDateSQLTextBox.TabIndex = 5;
+            // 
+            // ordersToDateCalcLabel
+            // 
+            this.ordersToDateCalcLabel.AutoSize = true;
+            this.ordersToDateCalcLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ordersToDateCalcLabel.Location = new System.Drawing.Point(418, 449);
+            this.ordersToDateCalcLabel.Name = "ordersToDateCalcLabel";
+            this.ordersToDateCalcLabel.Size = new System.Drawing.Size(98, 21);
+            this.ordersToDateCalcLabel.TabIndex = 4;
+            this.ordersToDateCalcLabel.Text = "Orders (calc)";
+            this.ordersToDateCalcLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ordersToDateCalcTextBox
+            // 
+            this.ordersToDateCalcTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ordersToDateCalcTextBox.Location = new System.Drawing.Point(560, 441);
+            this.ordersToDateCalcTextBox.Name = "ordersToDateCalcTextBox";
+            this.ordersToDateCalcTextBox.Size = new System.Drawing.Size(289, 29);
+            this.ordersToDateCalcTextBox.TabIndex = 5;
+            // 
+            // ordersListView
+            // 
+            this.ordersListView.BackColor = System.Drawing.SystemColors.Window;
+            this.ordersListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.OrderID,
+            this.ProductName,
+            this.Quantity,
+            this.UnitPrice,
+            this.ExtendedPrice});
+            this.ordersListView.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ordersListView.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.ordersListView.HideSelection = false;
+            this.ordersListView.Location = new System.Drawing.Point(45, 524);
+            this.ordersListView.Name = "ordersListView";
+            this.ordersListView.Size = new System.Drawing.Size(804, 292);
+            this.ordersListView.TabIndex = 6;
+            this.ordersListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // OrderID
+            // 
+            this.OrderID.Text = "OrderID";
+            this.OrderID.Width = 100;
+            // 
+            // ProductName
+            // 
+            this.ProductName.Text = "ProductName ";
+            this.ProductName.Width = 350;
+            // 
+            // Quantity
+            // 
+            this.Quantity.Text = "Quantity";
+            this.Quantity.Width = 100;
+            // 
+            // UnitPrice
+            // 
+            this.UnitPrice.Text = "UnitPrice";
+            this.UnitPrice.Width = 100;
+            // 
+            // ExtendedPrice
+            // 
+            this.ExtendedPrice.Text = "ExtendedPrice";
+            this.ExtendedPrice.Width = 100;
+            // 
+            // ordersListLabel
+            // 
+            this.ordersListLabel.AutoSize = true;
+            this.ordersListLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ordersListLabel.Location = new System.Drawing.Point(45, 500);
+            this.ordersListLabel.Name = "ordersListLabel";
+            this.ordersListLabel.Size = new System.Drawing.Size(79, 21);
+            this.ordersListLabel.TabIndex = 2;
+            this.ordersListLabel.Text = "Orders by";
+            // 
+            // selectedCustomerLabelOrders
+            // 
+            this.selectedCustomerLabelOrders.AutoSize = true;
+            this.selectedCustomerLabelOrders.Location = new System.Drawing.Point(130, 496);
+            this.selectedCustomerLabelOrders.Name = "selectedCustomerLabelOrders";
+            this.selectedCustomerLabelOrders.Size = new System.Drawing.Size(0, 25);
+            this.selectedCustomerLabelOrders.TabIndex = 3;
+            // 
+            // ordersListCustomerLabel
+            // 
+            this.ordersListCustomerLabel.AutoSize = true;
+            this.ordersListCustomerLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ordersListCustomerLabel.Location = new System.Drawing.Point(117, 500);
+            this.ordersListCustomerLabel.Name = "ordersListCustomerLabel";
+            this.ordersListCustomerLabel.Size = new System.Drawing.Size(140, 21);
+            this.ordersListCustomerLabel.TabIndex = 3;
+            this.ordersListCustomerLabel.Text = "Selected Customer";
             // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(698, 451);
+            this.ClientSize = new System.Drawing.Size(890, 837);
+            this.Controls.Add(this.ordersListView);
             this.Controls.Add(this.contactTitleTextBox);
+            this.Controls.Add(this.ordersToDateCalcTextBox);
+            this.Controls.Add(this.ordersToDateCalcLabel);
+            this.Controls.Add(this.ordersToDateSQLTextBox);
+            this.Controls.Add(this.ordersToDateSQLLabel);
             this.Controls.Add(this.countryTextBox);
             this.Controls.Add(this.countryLabel);
             this.Controls.Add(this.postcodeTextBox);
@@ -260,8 +387,11 @@ namespace NorthwindUI
             this.Controls.Add(this.phoneLabel);
             this.Controls.Add(this.contactTextBox);
             this.Controls.Add(this.contactLabel);
+            this.Controls.Add(this.selectedCustomerLabelOrders);
+            this.Controls.Add(this.ordersListCustomerLabel);
             this.Controls.Add(this.customerNameHeading);
             this.Controls.Add(this.resultsListBoxLabel);
+            this.Controls.Add(this.ordersListLabel);
             this.Controls.Add(this.enterCustomerNameLabel);
             this.Controls.Add(this.customerNameTextBox);
             this.Controls.Add(this.customersFoundListBox);
@@ -298,6 +428,19 @@ namespace NorthwindUI
         private System.Windows.Forms.TextBox countryTextBox;
         private System.Windows.Forms.Label phoneLabel;
         private System.Windows.Forms.TextBox phoneNumberTextBox;
+        private System.Windows.Forms.Label ordersToDateSQLLabel;
+        private System.Windows.Forms.TextBox ordersToDateSQLTextBox;
+        private System.Windows.Forms.Label ordersToDateCalcLabel;
+        private System.Windows.Forms.TextBox ordersToDateCalcTextBox;
+        private System.Windows.Forms.ListView ordersListView;
+        private System.Windows.Forms.Label ordersListLabel;
+        private System.Windows.Forms.Label selectedCustomerLabelOrders;
+        private System.Windows.Forms.ColumnHeader OrderID;
+        private System.Windows.Forms.ColumnHeader ProductName;
+        private System.Windows.Forms.ColumnHeader Quantity;
+        private System.Windows.Forms.ColumnHeader UnitPrice;
+        private System.Windows.Forms.ColumnHeader ExtendedPrice;
+        private System.Windows.Forms.Label ordersListCustomerLabel;
     }
 }
 
