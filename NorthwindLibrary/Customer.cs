@@ -25,5 +25,13 @@ namespace NorthwindLibrary
             { return $"{CompanyName} ({CustomerID})"; }
         }
         public decimal OrdersToDate { get; set; }
+
+        public DateTime EarliestOrderDate
+        {
+            get { return NorthwindMethods.EarliestOrderDateByCustomerID(CustomerID); }
+            //See more efficient code under latest date, below
+        }
+
+        public DateTime LatestOrderDate => NorthwindMethods.LatestOrderDateByCustomerID(CustomerID);
     }
 }

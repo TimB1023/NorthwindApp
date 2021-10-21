@@ -25,15 +25,15 @@ namespace NorthwindUI
         public CustomerForm()
         {
             InitializeComponent();
-            updateSearchResultsList();
-            refreshCustomerFields();
+            UpdateSearchResultsList();
+            RefreshCustomerFields();
             //Initialise orders list:
             ordersListView.View = View.Details; //Adds column headers
             ordersListView.FullRowSelect = true;
             ordersListView.GridLines = true;
         }
 
-        private void refreshCustomerFields()
+        private void RefreshCustomerFields()
         {
             if (customersFoundListBox.SelectedItem != null)
             {
@@ -53,8 +53,20 @@ namespace NorthwindUI
 
                 ordersListCustomerLabel.Text = selectedCustomer.customerDisplayName;
 
-                updateOrdersList();
+                
+
                 ordersToDateCalcTextBox.Text = NorthwindMethods.SumOfOrdersByCustomerID(selectedCustomer.CustomerID).ToString("C");
+
+                earliestDatePicker.MinDate = selectedCustomer.EarliestOrderDate;
+                earliestDatePicker.MaxDate = selectedCustomer.LatestOrderDate;
+
+                latestDatePicker.MinDate = selectedCustomer.EarliestOrderDate;
+                latestDatePicker.MaxDate = selectedCustomer.LatestOrderDate;
+
+                earliestDatePicker.Value = selectedCustomer.EarliestOrderDate;
+                latestDatePicker.Value = selectedCustomer.LatestOrderDate;
+
+                UpdateOrdersList();
 
             }
             else
@@ -72,48 +84,51 @@ namespace NorthwindUI
                 ordersListCustomerLabel.Text = "selected customer";
                 ordersToDateCalcTextBox.Text = "";
                 ordersListView.Items.Clear();
+                earliestDatePicker.Value = DateTime.Today;
+                latestDatePicker.Value = DateTime.Today;
             }
         }
-        private void updateSearchResultsList()
+        private void UpdateSearchResultsList()
         {
             //DataAccess db = new DataAccess();
             //customers = db.GetCustomers(customerNameTextBox.Text);
             customersFoundListBox.DataSource = customers;
             customersFoundListBox.DisplayMember = "customerDisplayName"; //Defined in Customer class
         }
-        private void updateOrdersList()
+        private void UpdateOrdersList()
         {
             DataAccess db = new DataAccess();
             ordersBySelectedCustomer = db.GetOrdersByCustomerID (selectedCustomer.CustomerID);
+            var filteredOrders = NorthwindMethods.OrdersByCustIDAndDateFilter(ordersBySelectedCustomer, selectedCustomer, earliestDatePicker.Value, latestDatePicker.Value);
 
             ordersListView.Items.Clear();
 
             ordersListView.View = View.Details; //Other settings added in CustomerForm.Designer.cs
 
-            foreach (Order order in ordersBySelectedCustomer)
+            foreach (Order order in filteredOrders)
             {
-                string[] row = { order.OrderID, order.ProductName, order.ProductID, order.UnitPrice.ToString("C"), order.ExtendedPrice.ToString("C") };
+                string[] row = { order.OrderID, order.OrderDate.ToString("dd/MM/yy"), order.ShippedDate.ToString("dd/MM/yy"), order.SumOfOrder.ToString("C")};
                 var listViewItem = new ListViewItem(row);
                 ordersListView.Items.Add(listViewItem);
             }
 
         }
 
-        private void searchByPartialName()
+        private void SearchByPartialName()
         {
             if (customerNameTextBox.Text.Length >1) //Needs at least two characters
             {
                 DataAccess db = new NorthwindLibrary.DataAccess();
                 customers = db.GetCustomers(customerNameTextBox.Text);
-                updateSearchResultsList();
+                UpdateSearchResultsList();
             }
             else
             {
                 customers = null;
                 selectedCustomer = null;
             }
-            updateSearchResultsList();
-            refreshCustomerFields();
+            UpdateSearchResultsList();
+            RefreshCustomerFields();
         }
 
         //private void searchButtom_Click(object sender, EventArgs e)
@@ -121,9 +136,9 @@ namespace NorthwindUI
         //    searchByPartialName();
         //}
 
-        private void customerNameTextBox_TextChanged(object sender, EventArgs e)
+        private void CustomerNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            searchByPartialName();
+            SearchByPartialName();
         }
 
         private void CustomerForm_Load(object sender, EventArgs e)
@@ -131,14 +146,37 @@ namespace NorthwindUI
 
         }
 
-        private void customersFoundListBox_SelectedItemChanged(object sender, EventArgs e)
+        private void CustomersFoundListBox_SelectedItemChanged(object sender, EventArgs e)
         {
             
             if (customersFoundListBox.SelectedItem != null)
             {
                 selectedCustomer = (Customer)customersFoundListBox.SelectedItem;
-                refreshCustomerFields();
+                RefreshCustomerFields();
             }
+            earliestDatePicker.Value = selectedCustomer.EarliestOrderDate;
+            latestDatePicker.Value = selectedCustomer.LatestOrderDate;
+
+        }
+
+        private void EarliestDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            if (latestDatePicker.Value < earliestDatePicker.Value)
+            { 
+                latestDatePicker.Value = earliestDatePicker.Value;
+            }
+            latestDatePicker.MinDate = earliestDatePicker.Value;
+            UpdateOrdersList();
+        }
+
+        private void LatestDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            if (latestDatePicker.Value > earliestDatePicker.Value)
+            {
+                earliestDatePicker.Value = latestDatePicker.MinDate;
+            }
+            earliestDatePicker.Value = latestDatePicker.Value;
+            UpdateOrdersList();
         }
     }
 }

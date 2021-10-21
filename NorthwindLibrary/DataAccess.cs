@@ -43,7 +43,7 @@ namespace NorthwindLibrary
                 return output;
             }
         }
-        public decimal GetSumOfOrdersByCustomerID(string customerID)
+        public decimal GetSumOfOrdersByCustomerID(string customerID) //Sum calculated in DB
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionHelper.CnnVal("NorthwindDB")))
             {

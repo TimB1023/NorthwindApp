@@ -55,13 +55,15 @@ namespace NorthwindUI
             this.ordersToDateCalcTextBox = new System.Windows.Forms.TextBox();
             this.ordersListView = new System.Windows.Forms.ListView();
             this.OrderID = new System.Windows.Forms.ColumnHeader();
-            this.ProductName = new System.Windows.Forms.ColumnHeader();
-            this.Quantity = new System.Windows.Forms.ColumnHeader();
-            this.UnitPrice = new System.Windows.Forms.ColumnHeader();
-            this.ExtendedPrice = new System.Windows.Forms.ColumnHeader();
+            this.OrderDate = new System.Windows.Forms.ColumnHeader();
+            this.ShippedDate = new System.Windows.Forms.ColumnHeader();
+            this.OrderTotal = new System.Windows.Forms.ColumnHeader();
             this.ordersListLabel = new System.Windows.Forms.Label();
             this.selectedCustomerLabelOrders = new System.Windows.Forms.Label();
             this.ordersListCustomerLabel = new System.Windows.Forms.Label();
+            this.earliestDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.latestDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.orderDateFilterLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // customersFoundListBox
@@ -73,7 +75,7 @@ namespace NorthwindUI
             this.customersFoundListBox.Name = "customersFoundListBox";
             this.customersFoundListBox.Size = new System.Drawing.Size(291, 298);
             this.customersFoundListBox.TabIndex = 0;
-            this.customersFoundListBox.SelectedValueChanged += new System.EventHandler(this.customersFoundListBox_SelectedItemChanged);
+            this.customersFoundListBox.SelectedValueChanged += new System.EventHandler(this.CustomersFoundListBox_SelectedItemChanged);
             // 
             // customerNameTextBox
             // 
@@ -81,7 +83,7 @@ namespace NorthwindUI
             this.customerNameTextBox.Name = "customerNameTextBox";
             this.customerNameTextBox.Size = new System.Drawing.Size(291, 33);
             this.customerNameTextBox.TabIndex = 1;
-            this.customerNameTextBox.TextChanged += new System.EventHandler(this.customerNameTextBox_TextChanged);
+            this.customerNameTextBox.TextChanged += new System.EventHandler(this.CustomerNameTextBox_TextChanged);
             // 
             // enterCustomerNameLabel
             // 
@@ -106,7 +108,7 @@ namespace NorthwindUI
             // customerNameHeading
             // 
             this.customerNameHeading.AutoSize = true;
-            this.customerNameHeading.Location = new System.Drawing.Point(418, 42);
+            this.customerNameHeading.Location = new System.Drawing.Point(409, 49);
             this.customerNameHeading.Name = "customerNameHeading";
             this.customerNameHeading.Size = new System.Drawing.Size(169, 25);
             this.customerNameHeading.TabIndex = 3;
@@ -116,7 +118,7 @@ namespace NorthwindUI
             // 
             this.contactLabel.AutoSize = true;
             this.contactLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.contactLabel.Location = new System.Drawing.Point(418, 108);
+            this.contactLabel.Location = new System.Drawing.Point(409, 115);
             this.contactLabel.Name = "contactLabel";
             this.contactLabel.Size = new System.Drawing.Size(63, 21);
             this.contactLabel.TabIndex = 4;
@@ -143,7 +145,7 @@ namespace NorthwindUI
             // 
             this.addressLabel.AutoSize = true;
             this.addressLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.addressLabel.Location = new System.Drawing.Point(418, 223);
+            this.addressLabel.Location = new System.Drawing.Point(409, 230);
             this.addressLabel.Name = "addressLabel";
             this.addressLabel.Size = new System.Drawing.Size(66, 21);
             this.addressLabel.TabIndex = 4;
@@ -162,7 +164,7 @@ namespace NorthwindUI
             // 
             this.cityLabel.AutoSize = true;
             this.cityLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cityLabel.Location = new System.Drawing.Point(418, 262);
+            this.cityLabel.Location = new System.Drawing.Point(409, 269);
             this.cityLabel.Name = "cityLabel";
             this.cityLabel.Size = new System.Drawing.Size(37, 21);
             this.cityLabel.TabIndex = 4;
@@ -181,7 +183,7 @@ namespace NorthwindUI
             // 
             this.regionLabel.AutoSize = true;
             this.regionLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.regionLabel.Location = new System.Drawing.Point(418, 301);
+            this.regionLabel.Location = new System.Drawing.Point(409, 308);
             this.regionLabel.Name = "regionLabel";
             this.regionLabel.Size = new System.Drawing.Size(59, 21);
             this.regionLabel.TabIndex = 4;
@@ -200,7 +202,7 @@ namespace NorthwindUI
             // 
             this.postcodeLabel.AutoSize = true;
             this.postcodeLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.postcodeLabel.Location = new System.Drawing.Point(418, 340);
+            this.postcodeLabel.Location = new System.Drawing.Point(409, 347);
             this.postcodeLabel.Name = "postcodeLabel";
             this.postcodeLabel.Size = new System.Drawing.Size(72, 21);
             this.postcodeLabel.TabIndex = 4;
@@ -219,7 +221,7 @@ namespace NorthwindUI
             // 
             this.countryLabel.AutoSize = true;
             this.countryLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.countryLabel.Location = new System.Drawing.Point(418, 379);
+            this.countryLabel.Location = new System.Drawing.Point(409, 386);
             this.countryLabel.Name = "countryLabel";
             this.countryLabel.Size = new System.Drawing.Size(66, 21);
             this.countryLabel.TabIndex = 4;
@@ -238,7 +240,7 @@ namespace NorthwindUI
             // 
             this.phoneLabel.AutoSize = true;
             this.phoneLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.phoneLabel.Location = new System.Drawing.Point(418, 183);
+            this.phoneLabel.Location = new System.Drawing.Point(409, 190);
             this.phoneLabel.Name = "phoneLabel";
             this.phoneLabel.Size = new System.Drawing.Size(54, 21);
             this.phoneLabel.TabIndex = 4;
@@ -257,7 +259,7 @@ namespace NorthwindUI
             // 
             this.ordersToDateSQLLabel.AutoSize = true;
             this.ordersToDateSQLLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ordersToDateSQLLabel.Location = new System.Drawing.Point(418, 414);
+            this.ordersToDateSQLLabel.Location = new System.Drawing.Point(409, 421);
             this.ordersToDateSQLLabel.Name = "ordersToDateSQLLabel";
             this.ordersToDateSQLLabel.Size = new System.Drawing.Size(101, 21);
             this.ordersToDateSQLLabel.TabIndex = 4;
@@ -276,7 +278,7 @@ namespace NorthwindUI
             // 
             this.ordersToDateCalcLabel.AutoSize = true;
             this.ordersToDateCalcLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ordersToDateCalcLabel.Location = new System.Drawing.Point(418, 449);
+            this.ordersToDateCalcLabel.Location = new System.Drawing.Point(409, 456);
             this.ordersToDateCalcLabel.Name = "ordersToDateCalcLabel";
             this.ordersToDateCalcLabel.Size = new System.Drawing.Size(98, 21);
             this.ordersToDateCalcLabel.TabIndex = 4;
@@ -296,16 +298,15 @@ namespace NorthwindUI
             this.ordersListView.BackColor = System.Drawing.SystemColors.Window;
             this.ordersListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.OrderID,
-            this.ProductName,
-            this.Quantity,
-            this.UnitPrice,
-            this.ExtendedPrice});
+            this.OrderDate,
+            this.ShippedDate,
+            this.OrderTotal});
             this.ordersListView.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ordersListView.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ordersListView.HideSelection = false;
-            this.ordersListView.Location = new System.Drawing.Point(45, 524);
+            this.ordersListView.Location = new System.Drawing.Point(45, 553);
             this.ordersListView.Name = "ordersListView";
-            this.ordersListView.Size = new System.Drawing.Size(804, 292);
+            this.ordersListView.Size = new System.Drawing.Size(804, 291);
             this.ordersListView.TabIndex = 6;
             this.ordersListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -314,31 +315,26 @@ namespace NorthwindUI
             this.OrderID.Text = "OrderID";
             this.OrderID.Width = 100;
             // 
-            // ProductName
+            // OrderDate
             // 
-            this.ProductName.Text = "ProductName ";
-            this.ProductName.Width = 350;
+            this.OrderDate.Text = "Order Date";
+            this.OrderDate.Width = 100;
             // 
-            // Quantity
+            // ShippedDate
             // 
-            this.Quantity.Text = "Quantity";
-            this.Quantity.Width = 100;
+            this.ShippedDate.Text = "Shipped Date";
+            this.ShippedDate.Width = 100;
             // 
-            // UnitPrice
+            // OrderTotal
             // 
-            this.UnitPrice.Text = "UnitPrice";
-            this.UnitPrice.Width = 100;
-            // 
-            // ExtendedPrice
-            // 
-            this.ExtendedPrice.Text = "ExtendedPrice";
-            this.ExtendedPrice.Width = 100;
+            this.OrderTotal.Text = "Order Total";
+            this.OrderTotal.Width = 150;
             // 
             // ordersListLabel
             // 
             this.ordersListLabel.AutoSize = true;
             this.ordersListLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ordersListLabel.Location = new System.Drawing.Point(45, 500);
+            this.ordersListLabel.Location = new System.Drawing.Point(45, 521);
             this.ordersListLabel.Name = "ordersListLabel";
             this.ordersListLabel.Size = new System.Drawing.Size(79, 21);
             this.ordersListLabel.TabIndex = 2;
@@ -356,17 +352,50 @@ namespace NorthwindUI
             // 
             this.ordersListCustomerLabel.AutoSize = true;
             this.ordersListCustomerLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ordersListCustomerLabel.Location = new System.Drawing.Point(117, 500);
+            this.ordersListCustomerLabel.Location = new System.Drawing.Point(117, 521);
             this.ordersListCustomerLabel.Name = "ordersListCustomerLabel";
             this.ordersListCustomerLabel.Size = new System.Drawing.Size(140, 21);
             this.ordersListCustomerLabel.TabIndex = 3;
             this.ordersListCustomerLabel.Text = "Selected Customer";
             // 
+            // earliestDatePicker
+            // 
+            this.earliestDatePicker.CalendarFont = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.earliestDatePicker.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.earliestDatePicker.Location = new System.Drawing.Point(560, 522);
+            this.earliestDatePicker.Name = "earliestDatePicker";
+            this.earliestDatePicker.Size = new System.Drawing.Size(139, 25);
+            this.earliestDatePicker.TabIndex = 7;
+            this.earliestDatePicker.ValueChanged += new System.EventHandler(this.EarliestDatePicker_ValueChanged);
+            // 
+            // latestDatePicker
+            // 
+            this.latestDatePicker.CalendarFont = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.latestDatePicker.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.latestDatePicker.Location = new System.Drawing.Point(705, 521);
+            this.latestDatePicker.Name = "latestDatePicker";
+            this.latestDatePicker.Size = new System.Drawing.Size(144, 25);
+            this.latestDatePicker.TabIndex = 7;
+            this.latestDatePicker.ValueChanged += new System.EventHandler(this.LatestDatePicker_ValueChanged);
+            // 
+            // orderDateFilterLabel
+            // 
+            this.orderDateFilterLabel.AutoSize = true;
+            this.orderDateFilterLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.orderDateFilterLabel.Location = new System.Drawing.Point(409, 521);
+            this.orderDateFilterLabel.Name = "orderDateFilterLabel";
+            this.orderDateFilterLabel.Size = new System.Drawing.Size(145, 21);
+            this.orderDateFilterLabel.TabIndex = 8;
+            this.orderDateFilterLabel.Text = "Filter by order date:";
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(890, 837);
+            this.ClientSize = new System.Drawing.Size(890, 856);
+            this.Controls.Add(this.orderDateFilterLabel);
+            this.Controls.Add(this.latestDatePicker);
+            this.Controls.Add(this.earliestDatePicker);
             this.Controls.Add(this.ordersListView);
             this.Controls.Add(this.contactTitleTextBox);
             this.Controls.Add(this.ordersToDateCalcTextBox);
@@ -436,11 +465,13 @@ namespace NorthwindUI
         private System.Windows.Forms.Label ordersListLabel;
         private System.Windows.Forms.Label selectedCustomerLabelOrders;
         private System.Windows.Forms.ColumnHeader OrderID;
-        private System.Windows.Forms.ColumnHeader ProductName;
-        private System.Windows.Forms.ColumnHeader Quantity;
-        private System.Windows.Forms.ColumnHeader UnitPrice;
-        private System.Windows.Forms.ColumnHeader ExtendedPrice;
         private System.Windows.Forms.Label ordersListCustomerLabel;
+        private System.Windows.Forms.DateTimePicker earliestDatePicker;
+        private System.Windows.Forms.DateTimePicker latestDatePicker;
+        private System.Windows.Forms.Label orderDateFilterLabel;
+        private System.Windows.Forms.ColumnHeader OrderDate;
+        private System.Windows.Forms.ColumnHeader ShippedDate;
+        private System.Windows.Forms.ColumnHeader OrderTotal;
     }
 }
 
