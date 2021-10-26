@@ -35,6 +35,15 @@ namespace NorthwindLibrary
             }; //Connection is closed at this point because of using statement
         }
 
+        public List<Order> GetAllOrderDates()
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionHelper.CnnVal("NorthwindDB")))
+            {
+                var output = connection.Query<Order>("dbo.GetOrderDates").ToList();
+                return output;
+            }
+        }
+
         public List<Order> GetOrdersByCustomerID(string customerID)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionHelper.CnnVal("NorthwindDB")))

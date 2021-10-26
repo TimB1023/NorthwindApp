@@ -29,6 +29,10 @@ namespace NorthwindUI
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.customersFoundListBox = new System.Windows.Forms.ListBox();
             this.customerNameTextBox = new System.Windows.Forms.TextBox();
             this.enterCustomerNameLabel = new System.Windows.Forms.Label();
@@ -53,17 +57,15 @@ namespace NorthwindUI
             this.ordersToDateSQLTextBox = new System.Windows.Forms.TextBox();
             this.ordersToDateCalcLabel = new System.Windows.Forms.Label();
             this.ordersToDateCalcTextBox = new System.Windows.Forms.TextBox();
-            this.ordersListView = new System.Windows.Forms.ListView();
-            this.OrderID = new System.Windows.Forms.ColumnHeader();
-            this.OrderDate = new System.Windows.Forms.ColumnHeader();
-            this.ShippedDate = new System.Windows.Forms.ColumnHeader();
-            this.OrderTotal = new System.Windows.Forms.ColumnHeader();
             this.ordersListLabel = new System.Windows.Forms.Label();
             this.selectedCustomerLabelOrders = new System.Windows.Forms.Label();
             this.ordersListCustomerLabel = new System.Windows.Forms.Label();
             this.earliestDatePicker = new System.Windows.Forms.DateTimePicker();
             this.latestDatePicker = new System.Windows.Forms.DateTimePicker();
             this.orderDateFilterLabel = new System.Windows.Forms.Label();
+            this.clearFiltersBbutton = new System.Windows.Forms.Button();
+            this.ordersDataGridView = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.ordersDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // customersFoundListBox
@@ -74,7 +76,7 @@ namespace NorthwindUI
             this.customersFoundListBox.Location = new System.Drawing.Point(45, 124);
             this.customersFoundListBox.Name = "customersFoundListBox";
             this.customersFoundListBox.Size = new System.Drawing.Size(291, 298);
-            this.customersFoundListBox.TabIndex = 0;
+            this.customersFoundListBox.TabIndex = 1;
             this.customersFoundListBox.SelectedValueChanged += new System.EventHandler(this.CustomersFoundListBox_SelectedItemChanged);
             // 
             // customerNameTextBox
@@ -82,7 +84,7 @@ namespace NorthwindUI
             this.customerNameTextBox.Location = new System.Drawing.Point(45, 49);
             this.customerNameTextBox.Name = "customerNameTextBox";
             this.customerNameTextBox.Size = new System.Drawing.Size(291, 33);
-            this.customerNameTextBox.TabIndex = 1;
+            this.customerNameTextBox.TabIndex = 0;
             this.customerNameTextBox.TextChanged += new System.EventHandler(this.CustomerNameTextBox_TextChanged);
             // 
             // enterCustomerNameLabel
@@ -108,7 +110,7 @@ namespace NorthwindUI
             // customerNameHeading
             // 
             this.customerNameHeading.AutoSize = true;
-            this.customerNameHeading.Location = new System.Drawing.Point(409, 49);
+            this.customerNameHeading.Location = new System.Drawing.Point(409, 37);
             this.customerNameHeading.Name = "customerNameHeading";
             this.customerNameHeading.Size = new System.Drawing.Size(169, 25);
             this.customerNameHeading.TabIndex = 3;
@@ -118,7 +120,7 @@ namespace NorthwindUI
             // 
             this.contactLabel.AutoSize = true;
             this.contactLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.contactLabel.Location = new System.Drawing.Point(409, 115);
+            this.contactLabel.Location = new System.Drawing.Point(409, 103);
             this.contactLabel.Name = "contactLabel";
             this.contactLabel.Size = new System.Drawing.Size(63, 21);
             this.contactLabel.TabIndex = 4;
@@ -131,7 +133,7 @@ namespace NorthwindUI
             this.contactTextBox.Location = new System.Drawing.Point(560, 100);
             this.contactTextBox.Name = "contactTextBox";
             this.contactTextBox.Size = new System.Drawing.Size(289, 29);
-            this.contactTextBox.TabIndex = 5;
+            this.contactTextBox.TabIndex = 2;
             // 
             // contactTitleTextBox
             // 
@@ -139,13 +141,13 @@ namespace NorthwindUI
             this.contactTitleTextBox.Location = new System.Drawing.Point(560, 133);
             this.contactTitleTextBox.Name = "contactTitleTextBox";
             this.contactTitleTextBox.Size = new System.Drawing.Size(289, 29);
-            this.contactTitleTextBox.TabIndex = 5;
+            this.contactTitleTextBox.TabIndex = 3;
             // 
             // addressLabel
             // 
             this.addressLabel.AutoSize = true;
             this.addressLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.addressLabel.Location = new System.Drawing.Point(409, 230);
+            this.addressLabel.Location = new System.Drawing.Point(409, 218);
             this.addressLabel.Name = "addressLabel";
             this.addressLabel.Size = new System.Drawing.Size(66, 21);
             this.addressLabel.TabIndex = 4;
@@ -164,7 +166,7 @@ namespace NorthwindUI
             // 
             this.cityLabel.AutoSize = true;
             this.cityLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cityLabel.Location = new System.Drawing.Point(409, 269);
+            this.cityLabel.Location = new System.Drawing.Point(409, 257);
             this.cityLabel.Name = "cityLabel";
             this.cityLabel.Size = new System.Drawing.Size(37, 21);
             this.cityLabel.TabIndex = 4;
@@ -177,13 +179,13 @@ namespace NorthwindUI
             this.cityTextBox.Location = new System.Drawing.Point(560, 254);
             this.cityTextBox.Name = "cityTextBox";
             this.cityTextBox.Size = new System.Drawing.Size(289, 29);
-            this.cityTextBox.TabIndex = 5;
+            this.cityTextBox.TabIndex = 6;
             // 
             // regionLabel
             // 
             this.regionLabel.AutoSize = true;
             this.regionLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.regionLabel.Location = new System.Drawing.Point(409, 308);
+            this.regionLabel.Location = new System.Drawing.Point(409, 296);
             this.regionLabel.Name = "regionLabel";
             this.regionLabel.Size = new System.Drawing.Size(59, 21);
             this.regionLabel.TabIndex = 4;
@@ -196,13 +198,13 @@ namespace NorthwindUI
             this.regionTextBox.Location = new System.Drawing.Point(560, 293);
             this.regionTextBox.Name = "regionTextBox";
             this.regionTextBox.Size = new System.Drawing.Size(289, 29);
-            this.regionTextBox.TabIndex = 5;
+            this.regionTextBox.TabIndex = 7;
             // 
             // postcodeLabel
             // 
             this.postcodeLabel.AutoSize = true;
             this.postcodeLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.postcodeLabel.Location = new System.Drawing.Point(409, 347);
+            this.postcodeLabel.Location = new System.Drawing.Point(409, 335);
             this.postcodeLabel.Name = "postcodeLabel";
             this.postcodeLabel.Size = new System.Drawing.Size(72, 21);
             this.postcodeLabel.TabIndex = 4;
@@ -215,13 +217,13 @@ namespace NorthwindUI
             this.postcodeTextBox.Location = new System.Drawing.Point(560, 332);
             this.postcodeTextBox.Name = "postcodeTextBox";
             this.postcodeTextBox.Size = new System.Drawing.Size(289, 29);
-            this.postcodeTextBox.TabIndex = 5;
+            this.postcodeTextBox.TabIndex = 8;
             // 
             // countryLabel
             // 
             this.countryLabel.AutoSize = true;
             this.countryLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.countryLabel.Location = new System.Drawing.Point(409, 386);
+            this.countryLabel.Location = new System.Drawing.Point(409, 374);
             this.countryLabel.Name = "countryLabel";
             this.countryLabel.Size = new System.Drawing.Size(66, 21);
             this.countryLabel.TabIndex = 4;
@@ -234,13 +236,13 @@ namespace NorthwindUI
             this.countryTextBox.Location = new System.Drawing.Point(560, 371);
             this.countryTextBox.Name = "countryTextBox";
             this.countryTextBox.Size = new System.Drawing.Size(289, 29);
-            this.countryTextBox.TabIndex = 5;
+            this.countryTextBox.TabIndex = 9;
             // 
             // phoneLabel
             // 
             this.phoneLabel.AutoSize = true;
             this.phoneLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.phoneLabel.Location = new System.Drawing.Point(409, 190);
+            this.phoneLabel.Location = new System.Drawing.Point(409, 178);
             this.phoneLabel.Name = "phoneLabel";
             this.phoneLabel.Size = new System.Drawing.Size(54, 21);
             this.phoneLabel.TabIndex = 4;
@@ -253,13 +255,13 @@ namespace NorthwindUI
             this.phoneNumberTextBox.Location = new System.Drawing.Point(560, 175);
             this.phoneNumberTextBox.Name = "phoneNumberTextBox";
             this.phoneNumberTextBox.Size = new System.Drawing.Size(289, 29);
-            this.phoneNumberTextBox.TabIndex = 5;
+            this.phoneNumberTextBox.TabIndex = 4;
             // 
             // ordersToDateSQLLabel
             // 
             this.ordersToDateSQLLabel.AutoSize = true;
             this.ordersToDateSQLLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ordersToDateSQLLabel.Location = new System.Drawing.Point(409, 421);
+            this.ordersToDateSQLLabel.Location = new System.Drawing.Point(409, 409);
             this.ordersToDateSQLLabel.Name = "ordersToDateSQLLabel";
             this.ordersToDateSQLLabel.Size = new System.Drawing.Size(101, 21);
             this.ordersToDateSQLLabel.TabIndex = 4;
@@ -272,13 +274,13 @@ namespace NorthwindUI
             this.ordersToDateSQLTextBox.Location = new System.Drawing.Point(560, 406);
             this.ordersToDateSQLTextBox.Name = "ordersToDateSQLTextBox";
             this.ordersToDateSQLTextBox.Size = new System.Drawing.Size(289, 29);
-            this.ordersToDateSQLTextBox.TabIndex = 5;
+            this.ordersToDateSQLTextBox.TabIndex = 10;
             // 
             // ordersToDateCalcLabel
             // 
             this.ordersToDateCalcLabel.AutoSize = true;
             this.ordersToDateCalcLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ordersToDateCalcLabel.Location = new System.Drawing.Point(409, 456);
+            this.ordersToDateCalcLabel.Location = new System.Drawing.Point(409, 444);
             this.ordersToDateCalcLabel.Name = "ordersToDateCalcLabel";
             this.ordersToDateCalcLabel.Size = new System.Drawing.Size(98, 21);
             this.ordersToDateCalcLabel.TabIndex = 4;
@@ -291,44 +293,7 @@ namespace NorthwindUI
             this.ordersToDateCalcTextBox.Location = new System.Drawing.Point(560, 441);
             this.ordersToDateCalcTextBox.Name = "ordersToDateCalcTextBox";
             this.ordersToDateCalcTextBox.Size = new System.Drawing.Size(289, 29);
-            this.ordersToDateCalcTextBox.TabIndex = 5;
-            // 
-            // ordersListView
-            // 
-            this.ordersListView.BackColor = System.Drawing.SystemColors.Window;
-            this.ordersListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.OrderID,
-            this.OrderDate,
-            this.ShippedDate,
-            this.OrderTotal});
-            this.ordersListView.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ordersListView.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ordersListView.HideSelection = false;
-            this.ordersListView.Location = new System.Drawing.Point(45, 553);
-            this.ordersListView.Name = "ordersListView";
-            this.ordersListView.Size = new System.Drawing.Size(804, 291);
-            this.ordersListView.TabIndex = 6;
-            this.ordersListView.UseCompatibleStateImageBehavior = false;
-            // 
-            // OrderID
-            // 
-            this.OrderID.Text = "OrderID";
-            this.OrderID.Width = 100;
-            // 
-            // OrderDate
-            // 
-            this.OrderDate.Text = "Order Date";
-            this.OrderDate.Width = 100;
-            // 
-            // ShippedDate
-            // 
-            this.ShippedDate.Text = "Shipped Date";
-            this.ShippedDate.Width = 100;
-            // 
-            // OrderTotal
-            // 
-            this.OrderTotal.Text = "Order Total";
-            this.OrderTotal.Width = 150;
+            this.ordersToDateCalcTextBox.TabIndex = 11;
             // 
             // ordersListLabel
             // 
@@ -388,15 +353,75 @@ namespace NorthwindUI
             this.orderDateFilterLabel.TabIndex = 8;
             this.orderDateFilterLabel.Text = "Filter by order date:";
             // 
+            // clearFiltersBbutton
+            // 
+            this.clearFiltersBbutton.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.clearFiltersBbutton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.clearFiltersBbutton.Location = new System.Drawing.Point(856, 521);
+            this.clearFiltersBbutton.Name = "clearFiltersBbutton";
+            this.clearFiltersBbutton.Size = new System.Drawing.Size(22, 23);
+            this.clearFiltersBbutton.TabIndex = 8;
+            this.clearFiltersBbutton.Text = "x";
+            this.clearFiltersBbutton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.clearFiltersBbutton.UseVisualStyleBackColor = true;
+            this.clearFiltersBbutton.Click += new System.EventHandler(this.clearFiltersBbutton_Click);
+            // 
+            // ordersDataGridView
+            // 
+            this.ordersDataGridView.AllowUserToAddRows = false;
+            this.ordersDataGridView.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.ordersDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.ordersDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.ordersDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ordersDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.ordersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ordersDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            this.ordersDataGridView.EnableHeadersVisualStyles = false;
+            this.ordersDataGridView.Location = new System.Drawing.Point(45, 553);
+            this.ordersDataGridView.MultiSelect = false;
+            this.ordersDataGridView.Name = "ordersDataGridView";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ordersDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.ordersDataGridView.RowHeadersVisible = false;
+            this.ordersDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.ordersDataGridView.RowTemplate.Height = 25;
+            this.ordersDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.ordersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.ordersDataGridView.Size = new System.Drawing.Size(804, 291);
+            this.ordersDataGridView.TabIndex = 2;
+            this.ordersDataGridView.DoubleClick += new System.EventHandler(this.ordersDataGridView_DoubleClick);
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(890, 856);
+            this.Controls.Add(this.ordersDataGridView);
+            this.Controls.Add(this.clearFiltersBbutton);
             this.Controls.Add(this.orderDateFilterLabel);
             this.Controls.Add(this.latestDatePicker);
             this.Controls.Add(this.earliestDatePicker);
-            this.Controls.Add(this.ordersListView);
             this.Controls.Add(this.contactTitleTextBox);
             this.Controls.Add(this.ordersToDateCalcTextBox);
             this.Controls.Add(this.ordersToDateCalcLabel);
@@ -430,6 +455,7 @@ namespace NorthwindUI
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NorthWind Customers";
             this.Load += new System.EventHandler(this.CustomerForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.ordersDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -461,17 +487,14 @@ namespace NorthwindUI
         private System.Windows.Forms.TextBox ordersToDateSQLTextBox;
         private System.Windows.Forms.Label ordersToDateCalcLabel;
         private System.Windows.Forms.TextBox ordersToDateCalcTextBox;
-        private System.Windows.Forms.ListView ordersListView;
         private System.Windows.Forms.Label ordersListLabel;
         private System.Windows.Forms.Label selectedCustomerLabelOrders;
-        private System.Windows.Forms.ColumnHeader OrderID;
         private System.Windows.Forms.Label ordersListCustomerLabel;
         private System.Windows.Forms.DateTimePicker earliestDatePicker;
         private System.Windows.Forms.DateTimePicker latestDatePicker;
         private System.Windows.Forms.Label orderDateFilterLabel;
-        private System.Windows.Forms.ColumnHeader OrderDate;
-        private System.Windows.Forms.ColumnHeader ShippedDate;
-        private System.Windows.Forms.ColumnHeader OrderTotal;
+        private System.Windows.Forms.Button clearFiltersBbutton;
+        private System.Windows.Forms.DataGridView ordersDataGridView;
     }
 }
 

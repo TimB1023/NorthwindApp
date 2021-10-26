@@ -8,7 +8,28 @@ namespace NorthwindLibrary
 {
     public class NorthwindMethods
     {
-        
+        public static DateTime EarliestOrderDateInDB()
+        {
+            List<Order> allCustomerOrders = new();
+            DateTime earliestOrderDate = new();
+
+            DataAccess db = new NorthwindLibrary.DataAccess();
+            allCustomerOrders = db.GetAllOrderDates().ToList();
+            earliestOrderDate = allCustomerOrders.Min(x => x.OrderDate);
+            return earliestOrderDate;
+        }
+
+        public static DateTime LatestOrderDateInDB()
+        {
+                List<Order> allCustomerOrders = new();
+                DateTime latestOrderDate = new();
+
+                DataAccess db = new NorthwindLibrary.DataAccess();
+                allCustomerOrders = db.GetAllOrderDates().ToList();
+                latestOrderDate = allCustomerOrders.Max(x => x.OrderDate);
+                return latestOrderDate;
+        }
+
         public static decimal SumOfOrdersByCustomerID(string CustomerID)
         {
             List<Order> selectedCustomerOrders = new();
@@ -79,8 +100,9 @@ namespace NorthwindLibrary
         public static List<Order> OrdersByCustIDAndDateFilter(List<Order> CustOrderList, Customer SelectedCustomer, DateTime EarliestDate, DateTime LatestDate)
         {
             var earlyFilteredOrders = CustOrderList.Where(x => x.OrderDate > EarliestDate).ToList();
-            var filteredOrders = earlyFilteredOrders.Where(x => x.OrderDate < LatestDate).ToList();
-            return filteredOrders;
+            var filteredOrders = earlyFilteredOrders.Where(x => x.OrderDate < LatestDate).Where(x => x.OrderID == x.OrderID).ToList();
+            var oneRowPerOrder = filteredOrders.GroupBy(x => x.OrderID).Select(group => group.First()).ToList();
+            return oneRowPerOrder;
         }
     }
 }
