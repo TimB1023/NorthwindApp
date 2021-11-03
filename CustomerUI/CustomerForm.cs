@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NorthwindLibrary;
+using System.Diagnostics;
 
 
 
@@ -15,7 +16,7 @@ namespace NorthwindUI
 {
     public partial class CustomerForm : Form
     {
-        int minCharsToEnter = 2;
+        readonly int minCharsToEnter = 2;
 
         List<Customer> customers = new List<Customer>(); //Initialise customer list so that the list box is empty on startup
 
@@ -25,42 +26,24 @@ namespace NorthwindUI
 
         public DateTime latestOrderDateInDB = NorthwindMethods.LatestOrderDateInDB();
         public DateTime earliestOrderDateInDB = NorthwindMethods.EarliestOrderDateInDB();
-
-        public int a = 1;
+        
 
 
         public CustomerForm()
         {
             InitializeComponent();
-
-            UpdateSearchResultsList();
-            RefreshCustomerFields();
-            //Initialise orders list:
-
-            //dataGridView1.DataSource = ordersBySelectedCustomer;
-
-            InitializeDataGridView();
-
-        //    ordersListView.View = View.Details; //Adds column headers
-        //    ordersListView.FullRowSelect = true;
-        //    ordersListView.GridLines = true;
+            ResetMinMaxDatesAndPickers();
         }
-
-        //private void GetMinDate()
-        //{
-        //    DataAccess db = new NorthwindLibrary.DataAccess();
-        //    var orders = db.GetOrderDates();
-        //}
 
         private void ResetMinMaxDatesAndPickers()
         {
-            earliestDatePicker.MaxDate = latestOrderDateInDB.AddDays(1);
-            earliestDatePicker.MinDate = earliestOrderDateInDB.AddDays(-1);
-            latestDatePicker.MinDate = earliestOrderDateInDB.AddDays(-1);
-            latestDatePicker.MaxDate = latestOrderDateInDB.AddDays(1);
-            earliestDatePicker.Value = earliestDatePicker.MinDate;
+            earliestDatePicker.MinDate = earliestOrderDateInDB;
+            earliestDatePicker.MaxDate = latestOrderDateInDB;
+            earliestDatePicker.Value = earliestOrderDateInDB;
 
-            latestDatePicker.Value = earliestDatePicker.MaxDate; 
+            latestDatePicker.MinDate = earliestOrderDateInDB;
+            latestDatePicker.MaxDate = latestOrderDateInDB;
+            latestDatePicker.Value = latestOrderDateInDB; 
         }
 
         private void InitializeDataGridView()
@@ -81,6 +64,28 @@ namespace NorthwindUI
             ordersDataGridView.DataSource = columns.ToList();
         }
 
+        private void ClearCustomerFields()
+        {
+            customerNameHeading.Text = "";
+            contactTextBox.Text = "";
+            contactTitleTextBox.Text = "";
+            addressTextBox.Text = "";
+            cityTextBox.Text = "";
+            regionTextBox.Text = "";
+            postcodeTextBox.Text = "";
+            countryTextBox.Text = "";
+            phoneNumberTextBox.Text = "";
+            ordersToDateSQLTextBox.Text = "";
+            ordersListCustomerLabel.Text = "selected customer";
+            ordersToDateCalcTextBox.Text = "";
+            //ordersListView.Items.Clear();
+            selectedCustomer = new Customer(); // So that the (data driven) orders list can be updated
+                                               //A simple .clear() does not work
+                                               //UpdateOrdersList();
+            ordersDataGridView.DataSource = null;
+            ordersDataGridView.Refresh();
+            //ResetMinMaxDatesAndPickers();
+        }
         private void RefreshCustomerFields()
         {
             if (customersFoundListBox.SelectedItem != null && customerNameTextBox.TextLength >= minCharsToEnter)
@@ -121,27 +126,29 @@ namespace NorthwindUI
             }
             else
             {
-                customerNameHeading.Text = "";
-                contactTextBox.Text = "";
-                contactTitleTextBox.Text = "";
-                addressTextBox.Text = "";
-                cityTextBox.Text = "";
-                regionTextBox.Text = "";
-                postcodeTextBox.Text = "";
-                countryTextBox.Text = "";
-                phoneNumberTextBox.Text = "";
-                ordersToDateSQLTextBox.Text = "";
-                ordersListCustomerLabel.Text = "selected customer";
-                ordersToDateCalcTextBox.Text = "";
-                //ordersListView.Items.Clear();
-                selectedCustomer = new Customer(); // So that the (data driven) orders list can be updated
-                //A simple .clear() does not work
-                //UpdateOrdersList();
-                ordersDataGridView.DataSource = null;
-                ordersDataGridView.Refresh();
-                ResetMinMaxDatesAndPickers();
+                MessageBox.Show("Shouldn't be seeing this");
+                //customerNameHeading.Text = "";
+                //contactTextBox.Text = "";
+                //contactTitleTextBox.Text = "";
+                //addressTextBox.Text = "";
+                //cityTextBox.Text = "";
+                //regionTextBox.Text = "";
+                //postcodeTextBox.Text = "";
+                //countryTextBox.Text = "";
+                //phoneNumberTextBox.Text = "";
+                //ordersToDateSQLTextBox.Text = "";
+                //ordersListCustomerLabel.Text = "selected customer";
+                //ordersToDateCalcTextBox.Text = "";
+                ////ordersListView.Items.Clear();
+                //selectedCustomer = new Customer(); // So that the (data driven) orders list can be updated
+                ////A simple .clear() does not work
+                ////UpdateOrdersList();
+                //ordersDataGridView.DataSource = null;
+                //ordersDataGridView.Refresh();
+                ////ResetMinMaxDatesAndPickers();
             }
         }
+
         private void UpdateSearchResultsList()
         {
             //DataAccess db = new DataAccess();
@@ -149,13 +156,14 @@ namespace NorthwindUI
             customersFoundListBox.DataSource = customers;
             customersFoundListBox.DisplayMember = "customerDisplayName"; //Defined in Customer class
         }
+
         private void UpdateOrdersList()
         {
             DataAccess db = new DataAccess();
             ordersBySelectedCustomer = db.GetOrdersByCustomerID (selectedCustomer.CustomerID);
             var filteredOrders = NorthwindMethods.OrdersByCustIDAndDateFilter(ordersBySelectedCustomer, selectedCustomer, earliestDatePicker.Value, latestDatePicker.Value);
 
-
+            var a = 2;
             //ordersListView.View = View.Details; //Other settings added in CustomerForm.Designer.cs
 
             foreach (Order order in filteredOrders)
@@ -177,45 +185,28 @@ namespace NorthwindUI
             {
                 DataAccess db = new NorthwindLibrary.DataAccess();
                 customers = db.GetCustomers(customerNameTextBox.Text);
-                UpdateSearchResultsList();
             }
             else
             {
                 customers = null;
                 selectedCustomer = null;
                 ResetMinMaxDatesAndPickers();
-                //earliestDatePicker.MaxDate = DateTime.Now.AddDays(1);
-                //earliestDatePicker.MinDate = DateTime.Today.AddDays(-1);
-                //earliestDatePicker.Value = DateTime.Today;
-                //latestDatePicker.MaxDate = DateTime.Today.AddDays(1);
-                //latestDatePicker.MinDate = DateTime.Today.AddDays(-1);
-                //latestDatePicker.Value = DateTime.Now;
             }
             UpdateSearchResultsList();
             RefreshCustomerFields();
         }
 
-
         private void CustomerNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (customerNameTextBox.TextLength<2)
-            {
-                ClearCustomerForm();
-            }
-
-            SearchByPartialName();
+            if (customerNameTextBox.TextLength < minCharsToEnter)  ClearCustomerForm();
+            if (customerNameTextBox.TextLength >= minCharsToEnter )  SearchByPartialName(); 
         }
 
         private void ClearCustomerForm()
         {
             UpdateSearchResultsList();
             ResetMinMaxDatesAndPickers();
-            RefreshCustomerFields();
-        }
-
-        private void CustomerForm_Load(object sender, EventArgs e)
-        {
-
+            ClearCustomerFields();
         }
 
         private void CustomersFoundListBox_SelectedItemChanged(object sender, EventArgs e)
@@ -244,57 +235,76 @@ namespace NorthwindUI
             }
         }
 
+        public void ShowPickerValues(string message)
+        {
+            var earlypickervalue = earliestDatePicker.Value;
+            var earlypickermin = earliestDatePicker.MinDate;
+            var earlypickermax = earliestDatePicker.MaxDate;
+            var latestmindate = latestDatePicker.MinDate;
+            var latestmaxdate = latestDatePicker.MaxDate;
+            var latestpickervalue = latestDatePicker.Value;
+
+            MessageBox.Show($"{message}\nearlypickervalue = {earliestDatePicker.Value}\nearlypickermin { earliestDatePicker.MinDate}\n earlypickermax = { earliestDatePicker.MaxDate}\nlatestmindate = { latestDatePicker.MinDate}\nlatestmaxdate = { latestDatePicker.MaxDate}\nlatestpickervalue = { latestDatePicker.Value} ");
+        }
         private void EarliestDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            if (latestDatePicker.Value < earliestDatePicker.Value && customerNameTextBox.TextLength >= minCharsToEnter)
+            //StackTrace stackTrace = new StackTrace();
+            //// Get calling method name
+            //MessageBox.Show($"Earliest caller: {stackTrace.GetFrame(1).GetMethod().Name}");
+
+
+            if (earliestDatePicker.Value > latestDatePicker.MinDate && customerNameTextBox.TextLength >= minCharsToEnter)
             {
-                latestDatePicker.MaxDate = latestOrderDateInDB;
-                latestDatePicker.MinDate = earliestOrderDateInDB;
-                //latestDatePicker.Value = earliestOrderDateInDB;
-                var mindate = earliestDatePicker.Value;
-                var latestmindate = latestDatePicker.MinDate;
-                var maxdate = latestDatePicker.Value;
-                var testcust = selectedCustomer;
+                //ShowPickerValues("Earliest Picker changed, before action");
+
                 latestDatePicker.MinDate = earliestDatePicker.Value;
-                //latestDatePicker.Value = earliestDatePicker.Value;
-            
-                UpdateOrdersList();
-                InitializeDataGridView();
+
+
+                //ShowPickerValues("Earliest Picker changed, after action");
             }
+            UpdateOrdersList();
+            InitializeDataGridView();
+
         }
 
         private void LatestDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            if (latestDatePicker.Value > earliestDatePicker.Value && customerNameTextBox.TextLength >= minCharsToEnter)
+            //StackTrace stackTrace = new StackTrace();
+            //// Get calling method name
+            //MessageBox.Show($"Latest caller: {stackTrace.GetFrame(1).GetMethod().Name}");
+            latestDatePicker.MinDate = earliestDatePicker.Value; //Shouldn't be needed. Included to fix bug on clicking dropdown for earliestdatepicker
+            if (latestDatePicker.Value < earliestDatePicker.MaxDate && customerNameTextBox.TextLength >= minCharsToEnter)
             {
-                var mindate = earliestDatePicker.Value;
-                var maxdate = latestDatePicker.Value;
+                //var mindate = earliestDatePicker.Value;
+                //var maxdate = latestDatePicker.Value;
+                //ShowPickerValues("Latest Picker changed, before action");
 
-                earliestDatePicker.MaxDate = latestOrderDateInDB;
-                //earliestDatePicker.Value = latestOrderDateInDB;
                 earliestDatePicker.MaxDate = latestDatePicker.Value;
-                //earliestDatePicker.Value = latestDatePicker.Value;
-    
-            
-                UpdateOrdersList();
-                InitializeDataGridView();
+
+
+                //ShowPickerValues("Latest Picker changed, after action");
             }
+            UpdateOrdersList();
+            InitializeDataGridView();
+
         }
 
-        private void clearFiltersBbutton_Click(object sender, EventArgs e)
+        private void ClearFiltersBbutton_Click(object sender, EventArgs e)
         {
             ResetMinMaxDatesAndPickers();
-            earliestDatePicker.MinDate = earliestOrderDateInDB;
-            earliestDatePicker.MaxDate = latestOrderDateInDB;
-            latestDatePicker.MinDate = earliestOrderDateInDB;
-            latestDatePicker.MaxDate = latestOrderDateInDB;
-            var custearliest = selectedCustomer.EarliestOrderDate;
-            var custlatest = selectedCustomer.LatestOrderDate;
-            earliestDatePicker.Value = selectedCustomer.EarliestOrderDate;
-            latestDatePicker.Value = selectedCustomer.LatestOrderDate;
+            //earliestDatePicker.MinDate = earliestOrderDateInDB;
+            //earliestDatePicker.MaxDate = latestOrderDateInDB;
+            //latestDatePicker.MinDate = earliestOrderDateInDB;
+            //latestDatePicker.MaxDate = latestOrderDateInDB;
+            //var custearliest = selectedCustomer.EarliestOrderDate;
+            //var custlatest = selectedCustomer.LatestOrderDate;
+            //earliestDatePicker.Value = selectedCustomer.EarliestOrderDate;
+            //latestDatePicker.Value = selectedCustomer.LatestOrderDate;
+            UpdateOrdersList();
+            InitializeDataGridView();
         }
 
-        private void ordersListView_DoubleClick(object sender, EventArgs e)
+        private void OrdersListView_DoubleClick(object sender, EventArgs e)
         {
             //var myOrder = ordersListView.SelectedItems[0].SubItems[0];
             
@@ -309,14 +319,13 @@ namespace NorthwindUI
             //orderform.ShowDialog();
         }
 
-        private void ordersDataGridView_DoubleClick(object sender, EventArgs e)
+        private void OrdersDataGridView_DoubleClick(object sender, EventArgs e)
         {
             var selectedOrderID = "-";
 
             selectedOrderID = this.ordersDataGridView.CurrentRow.Cells[0].Value.ToString();
 
             Order selectedOrder = ordersBySelectedCustomer.Where(x => x.OrderID == selectedOrderID).FirstOrDefault();
-
             OrderDetailsForm orderform = new(selectedCustomer, selectedOrder); //Calls form, passing parameters
             orderform.ShowDialog(); //Opens the form, not allowing access to other form whilst open
 
@@ -350,5 +359,7 @@ namespace NorthwindUI
 
 
         }
+
+
     }
 }

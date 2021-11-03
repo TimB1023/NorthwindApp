@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace NorthwindLibrary
 {
     public class NorthwindMethods
@@ -13,7 +14,7 @@ namespace NorthwindLibrary
             List<Order> allCustomerOrders = new();
             DateTime earliestOrderDate = new();
 
-            DataAccess db = new NorthwindLibrary.DataAccess();
+            DataAccess db = new DataAccess();
             allCustomerOrders = db.GetAllOrderDates().ToList();
             earliestOrderDate = allCustomerOrders.Min(x => x.OrderDate);
             return earliestOrderDate;
@@ -24,7 +25,7 @@ namespace NorthwindLibrary
                 List<Order> allCustomerOrders = new();
                 DateTime latestOrderDate = new();
 
-                DataAccess db = new NorthwindLibrary.DataAccess();
+                DataAccess db = new DataAccess();
                 allCustomerOrders = db.GetAllOrderDates().ToList();
                 latestOrderDate = allCustomerOrders.Max(x => x.OrderDate);
                 return latestOrderDate;
@@ -35,7 +36,7 @@ namespace NorthwindLibrary
             List<Order> selectedCustomerOrders = new();
             decimal sumOfOrders = 0;
 
-            DataAccess db = new NorthwindLibrary.DataAccess();
+            DataAccess db = new DataAccess();
             selectedCustomerOrders = db.GetOrdersByCustomerID(CustomerID).ToList();
 
             //Old version
@@ -69,14 +70,16 @@ namespace NorthwindLibrary
                 List<Order> selectedCustomerOrders = new();
                 DateTime earliestOrderDate = new();
 
-                DataAccess db = new NorthwindLibrary.DataAccess();
+                DataAccess db = new DataAccess();
                 selectedCustomerOrders = db.GetOrdersByCustomerID(CustomerID).ToList();
 
                 earliestOrderDate = selectedCustomerOrders.Min(x => x.OrderDate);
 
                 return earliestOrderDate;
+                
             }
-            else return DateTime.Today;
+            
+            else return DateTime.Today; //shouldn't ever reach this as there should always be a selected customer when called
 
         }
 
@@ -87,21 +90,23 @@ namespace NorthwindLibrary
                 List<Order> selectedCustomerOrders = new();
                 DateTime latestOrderDate = new();
 
-                DataAccess db = new NorthwindLibrary.DataAccess();
+                DataAccess db = new DataAccess();
                 selectedCustomerOrders = db.GetOrdersByCustomerID(CustomerID).ToList();
 
                 latestOrderDate = selectedCustomerOrders.Max(x => x.OrderDate);
 
                 return latestOrderDate;
             }
-            else return DateTime.Today;
+            else return DateTime.Today; //shouldn't ever reach this
         }
 
         public static List<Order> OrdersByCustIDAndDateFilter(List<Order> CustOrderList, Customer SelectedCustomer, DateTime EarliestDate, DateTime LatestDate)
+
         {
-            var earlyFilteredOrders = CustOrderList.Where(x => x.OrderDate > EarliestDate).ToList();
-            var filteredOrders = earlyFilteredOrders.Where(x => x.OrderDate < LatestDate).Where(x => x.OrderID == x.OrderID).ToList();
-            var oneRowPerOrder = filteredOrders.GroupBy(x => x.OrderID).Select(group => group.First()).ToList();
+            var earlyFilteredOrders = CustOrderList.Where(x => x.OrderDate >= EarliestDate).ToList();
+            var filteredOrders = earlyFilteredOrders.Where(x => x.OrderDate <= LatestDate).ToList(); // Where(x => x.OrderID == x.OrderID).ToList();
+            var oneRowPerOrder = filteredOrders.OrderBy(x => x.OrderID).GroupBy(x => x.OrderID).Select(group => group.First()).ToList();
+
             return oneRowPerOrder;
         }
     }

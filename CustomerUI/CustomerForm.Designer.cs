@@ -330,7 +330,8 @@ namespace NorthwindUI
             this.earliestDatePicker.Location = new System.Drawing.Point(560, 522);
             this.earliestDatePicker.Name = "earliestDatePicker";
             this.earliestDatePicker.Size = new System.Drawing.Size(139, 25);
-            this.earliestDatePicker.TabIndex = 7;
+            this.earliestDatePicker.TabIndex = 8;
+            this.earliestDatePicker.Value = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
             this.earliestDatePicker.ValueChanged += new System.EventHandler(this.EarliestDatePicker_ValueChanged);
             // 
             // latestDatePicker
@@ -341,6 +342,7 @@ namespace NorthwindUI
             this.latestDatePicker.Name = "latestDatePicker";
             this.latestDatePicker.Size = new System.Drawing.Size(144, 25);
             this.latestDatePicker.TabIndex = 7;
+            this.latestDatePicker.Value = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             this.latestDatePicker.ValueChanged += new System.EventHandler(this.LatestDatePicker_ValueChanged);
             // 
             // orderDateFilterLabel
@@ -364,7 +366,7 @@ namespace NorthwindUI
             this.clearFiltersBbutton.Text = "x";
             this.clearFiltersBbutton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.clearFiltersBbutton.UseVisualStyleBackColor = true;
-            this.clearFiltersBbutton.Click += new System.EventHandler(this.clearFiltersBbutton_Click);
+            this.clearFiltersBbutton.Click += new System.EventHandler(this.ClearFiltersBbutton_Click);
             // 
             // ordersDataGridView
             // 
@@ -410,7 +412,7 @@ namespace NorthwindUI
             this.ordersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ordersDataGridView.Size = new System.Drawing.Size(804, 291);
             this.ordersDataGridView.TabIndex = 2;
-            this.ordersDataGridView.DoubleClick += new System.EventHandler(this.ordersDataGridView_DoubleClick);
+            this.ordersDataGridView.DoubleClick += new System.EventHandler(this.OrdersDataGridView_DoubleClick);
             // 
             // CustomerForm
             // 
@@ -454,7 +456,6 @@ namespace NorthwindUI
             this.Name = "CustomerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NorthWind Customers";
-            this.Load += new System.EventHandler(this.CustomerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ordersDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
