@@ -13,7 +13,6 @@ namespace NorthwindLibrary
     {
         public List<Customer> GetCustomers(string partialCompanyName)
         {
-            //throw new NotImplementedException(); //Allows compilation before code has been put in
             //Note: Needs Nuget package System.Data.SqlClient
             using //Using disposes of connection once the task has been completed
                     //"opens the door" to the database so that the next part can request data

@@ -65,6 +65,7 @@ namespace NorthwindUI
             this.orderDateFilterLabel = new System.Windows.Forms.Label();
             this.clearFiltersBbutton = new System.Windows.Forms.Button();
             this.ordersDataGridView = new System.Windows.Forms.DataGridView();
+            this.showAllCustomersButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ordersDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,7 +74,7 @@ namespace NorthwindUI
             this.customersFoundListBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.customersFoundListBox.FormattingEnabled = true;
             this.customersFoundListBox.ItemHeight = 21;
-            this.customersFoundListBox.Location = new System.Drawing.Point(45, 124);
+            this.customersFoundListBox.Location = new System.Drawing.Point(45, 175);
             this.customersFoundListBox.Name = "customersFoundListBox";
             this.customersFoundListBox.Size = new System.Drawing.Size(291, 298);
             this.customersFoundListBox.TabIndex = 1;
@@ -101,7 +102,7 @@ namespace NorthwindUI
             // 
             this.resultsListBoxLabel.AutoSize = true;
             this.resultsListBoxLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.resultsListBoxLabel.Location = new System.Drawing.Point(45, 100);
+            this.resultsListBoxLabel.Location = new System.Drawing.Point(45, 148);
             this.resultsListBoxLabel.Name = "resultsListBoxLabel";
             this.resultsListBoxLabel.Size = new System.Drawing.Size(196, 21);
             this.resultsListBoxLabel.TabIndex = 2;
@@ -414,11 +415,23 @@ namespace NorthwindUI
             this.ordersDataGridView.TabIndex = 2;
             this.ordersDataGridView.DoubleClick += new System.EventHandler(this.OrdersDataGridView_DoubleClick);
             // 
+            // showAllCustomersButton
+            // 
+            this.showAllCustomersButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.showAllCustomersButton.Location = new System.Drawing.Point(45, 89);
+            this.showAllCustomersButton.Name = "showAllCustomersButton";
+            this.showAllCustomersButton.Size = new System.Drawing.Size(291, 35);
+            this.showAllCustomersButton.TabIndex = 12;
+            this.showAllCustomersButton.Text = "Show all customers";
+            this.showAllCustomersButton.UseVisualStyleBackColor = true;
+            this.showAllCustomersButton.Click += new System.EventHandler(this.showAllCustomersButton_Click);
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(890, 856);
+            this.Controls.Add(this.showAllCustomersButton);
             this.Controls.Add(this.ordersDataGridView);
             this.Controls.Add(this.clearFiltersBbutton);
             this.Controls.Add(this.orderDateFilterLabel);
@@ -496,6 +509,7 @@ namespace NorthwindUI
         private System.Windows.Forms.Label orderDateFilterLabel;
         private System.Windows.Forms.Button clearFiltersBbutton;
         private System.Windows.Forms.DataGridView ordersDataGridView;
+        private System.Windows.Forms.Button showAllCustomersButton;
     }
 }
 
