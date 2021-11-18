@@ -11,6 +11,12 @@ namespace NorthwindUI
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
+        /// 
+
+        enum MyColours
+        {
+            Red = 0, Blue = 1, Yellow = 2
+        }
         [STAThread]
         static void Main()
         {
@@ -18,6 +24,10 @@ namespace NorthwindUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new CustomerForm());
+
+           
+
+
         }
     }
 }

@@ -33,6 +33,7 @@ namespace NorthwindUI
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerForm));
             this.customersFoundListBox = new System.Windows.Forms.ListBox();
             this.customerNameTextBox = new System.Windows.Forms.TextBox();
             this.enterCustomerNameLabel = new System.Windows.Forms.Label();
@@ -63,10 +64,15 @@ namespace NorthwindUI
             this.earliestDatePicker = new System.Windows.Forms.DateTimePicker();
             this.latestDatePicker = new System.Windows.Forms.DateTimePicker();
             this.orderDateFilterLabel = new System.Windows.Forms.Label();
-            this.clearFiltersBbutton = new System.Windows.Forms.Button();
             this.ordersDataGridView = new System.Windows.Forms.DataGridView();
             this.showAllCustomersButton = new System.Windows.Forms.Button();
+            this.earlyFilterIconPictureBox = new System.Windows.Forms.PictureBox();
+            this.lateFilterIconPictureBox = new System.Windows.Forms.PictureBox();
+            this.clearFilterPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.ordersDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.earlyFilterIconPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lateFilterIconPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clearFilterPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // customersFoundListBox
@@ -283,9 +289,9 @@ namespace NorthwindUI
             this.ordersToDateCalcLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ordersToDateCalcLabel.Location = new System.Drawing.Point(409, 444);
             this.ordersToDateCalcLabel.Name = "ordersToDateCalcLabel";
-            this.ordersToDateCalcLabel.Size = new System.Drawing.Size(98, 21);
+            this.ordersToDateCalcLabel.Size = new System.Drawing.Size(91, 21);
             this.ordersToDateCalcLabel.TabIndex = 4;
-            this.ordersToDateCalcLabel.Text = "Orders (calc)";
+            this.ordersToDateCalcLabel.Text = "Orders (C#)";
             this.ordersToDateCalcLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ordersToDateCalcTextBox
@@ -328,7 +334,7 @@ namespace NorthwindUI
             // 
             this.earliestDatePicker.CalendarFont = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.earliestDatePicker.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.earliestDatePicker.Location = new System.Drawing.Point(560, 522);
+            this.earliestDatePicker.Location = new System.Drawing.Point(495, 522);
             this.earliestDatePicker.Name = "earliestDatePicker";
             this.earliestDatePicker.Size = new System.Drawing.Size(139, 25);
             this.earliestDatePicker.TabIndex = 8;
@@ -350,24 +356,11 @@ namespace NorthwindUI
             // 
             this.orderDateFilterLabel.AutoSize = true;
             this.orderDateFilterLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.orderDateFilterLabel.Location = new System.Drawing.Point(409, 521);
+            this.orderDateFilterLabel.Location = new System.Drawing.Point(344, 521);
             this.orderDateFilterLabel.Name = "orderDateFilterLabel";
             this.orderDateFilterLabel.Size = new System.Drawing.Size(145, 21);
             this.orderDateFilterLabel.TabIndex = 8;
             this.orderDateFilterLabel.Text = "Filter by order date:";
-            // 
-            // clearFiltersBbutton
-            // 
-            this.clearFiltersBbutton.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.clearFiltersBbutton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.clearFiltersBbutton.Location = new System.Drawing.Point(856, 521);
-            this.clearFiltersBbutton.Name = "clearFiltersBbutton";
-            this.clearFiltersBbutton.Size = new System.Drawing.Size(22, 23);
-            this.clearFiltersBbutton.TabIndex = 8;
-            this.clearFiltersBbutton.Text = "x";
-            this.clearFiltersBbutton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.clearFiltersBbutton.UseVisualStyleBackColor = true;
-            this.clearFiltersBbutton.Click += new System.EventHandler(this.ClearFiltersBbutton_Click);
             // 
             // ordersDataGridView
             // 
@@ -424,16 +417,61 @@ namespace NorthwindUI
             this.showAllCustomersButton.TabIndex = 12;
             this.showAllCustomersButton.Text = "Show all customers";
             this.showAllCustomersButton.UseVisualStyleBackColor = true;
-            this.showAllCustomersButton.Click += new System.EventHandler(this.showAllCustomersButton_Click);
+            this.showAllCustomersButton.Click += new System.EventHandler(this.ShowAllCustomersButton_Click);
+            // 
+            // earlyFilterIconPictureBox
+            // 
+            this.earlyFilterIconPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("earlyFilterIconPictureBox.Image")));
+            this.earlyFilterIconPictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("earlyFilterIconPictureBox.InitialImage")));
+            this.earlyFilterIconPictureBox.Location = new System.Drawing.Point(637, 526);
+            this.earlyFilterIconPictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.earlyFilterIconPictureBox.MaximumSize = new System.Drawing.Size(20, 20);
+            this.earlyFilterIconPictureBox.MinimumSize = new System.Drawing.Size(20, 20);
+            this.earlyFilterIconPictureBox.Name = "earlyFilterIconPictureBox";
+            this.earlyFilterIconPictureBox.Size = new System.Drawing.Size(20, 20);
+            this.earlyFilterIconPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.earlyFilterIconPictureBox.TabIndex = 13;
+            this.earlyFilterIconPictureBox.TabStop = false;
+            // 
+            // lateFilterIconPictureBox
+            // 
+            this.lateFilterIconPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("lateFilterIconPictureBox.Image")));
+            this.lateFilterIconPictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("lateFilterIconPictureBox.InitialImage")));
+            this.lateFilterIconPictureBox.Location = new System.Drawing.Point(683, 525);
+            this.lateFilterIconPictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.lateFilterIconPictureBox.MaximumSize = new System.Drawing.Size(20, 20);
+            this.lateFilterIconPictureBox.MinimumSize = new System.Drawing.Size(20, 20);
+            this.lateFilterIconPictureBox.Name = "lateFilterIconPictureBox";
+            this.lateFilterIconPictureBox.Size = new System.Drawing.Size(20, 20);
+            this.lateFilterIconPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.lateFilterIconPictureBox.TabIndex = 13;
+            this.lateFilterIconPictureBox.TabStop = false;
+            // 
+            // clearFilterPictureBox
+            // 
+            this.clearFilterPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("clearFilterPictureBox.Image")));
+            this.clearFilterPictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("clearFilterPictureBox.InitialImage")));
+            this.clearFilterPictureBox.Location = new System.Drawing.Point(660, 525);
+            this.clearFilterPictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.clearFilterPictureBox.MaximumSize = new System.Drawing.Size(20, 20);
+            this.clearFilterPictureBox.MinimumSize = new System.Drawing.Size(20, 20);
+            this.clearFilterPictureBox.Name = "clearFilterPictureBox";
+            this.clearFilterPictureBox.Size = new System.Drawing.Size(20, 20);
+            this.clearFilterPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.clearFilterPictureBox.TabIndex = 13;
+            this.clearFilterPictureBox.TabStop = false;
+            this.clearFilterPictureBox.Click += new System.EventHandler(this.newCLearFilterPictureBox_Click);
             // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(890, 856);
+            this.Controls.Add(this.clearFilterPictureBox);
+            this.Controls.Add(this.lateFilterIconPictureBox);
+            this.Controls.Add(this.earlyFilterIconPictureBox);
             this.Controls.Add(this.showAllCustomersButton);
             this.Controls.Add(this.ordersDataGridView);
-            this.Controls.Add(this.clearFiltersBbutton);
             this.Controls.Add(this.orderDateFilterLabel);
             this.Controls.Add(this.latestDatePicker);
             this.Controls.Add(this.earliestDatePicker);
@@ -470,6 +508,9 @@ namespace NorthwindUI
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NorthWind Customers";
             ((System.ComponentModel.ISupportInitialize)(this.ordersDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.earlyFilterIconPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lateFilterIconPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clearFilterPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -507,9 +548,11 @@ namespace NorthwindUI
         private System.Windows.Forms.DateTimePicker earliestDatePicker;
         private System.Windows.Forms.DateTimePicker latestDatePicker;
         private System.Windows.Forms.Label orderDateFilterLabel;
-        private System.Windows.Forms.Button clearFiltersBbutton;
         private System.Windows.Forms.DataGridView ordersDataGridView;
         private System.Windows.Forms.Button showAllCustomersButton;
+        private System.Windows.Forms.PictureBox earlyFilterIconPictureBox;
+        private System.Windows.Forms.PictureBox lateFilterIconPictureBox;
+        private System.Windows.Forms.PictureBox clearFilterPictureBox;
     }
 }
 

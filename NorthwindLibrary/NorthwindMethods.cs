@@ -67,11 +67,22 @@ namespace NorthwindLibrary
             }
             else return DateTime.Today; //shouldn't ever reach this
         }
-        public static List<Order> OrdersByCustIDAndDateFilter(List<Order> CustOrderList, Customer SelectedCustomer, DateTime EarliestDate, DateTime LatestDate)
+        public static (List<Order> ListOfOrders, DateTime MinDate, DateTime MaxDate) OrdersByCustIDAndDateFilter(List<Order> CustOrderList, Customer SelectedCustomer, DateTime EarliestDate, DateTime LatestDate)
         {
             // Grouping needed as the grain of the database is at the order row level, not
             // order. This means that each order number could occur several times
-            return CustOrderList.Where(x => x.OrderDate >= EarliestDate && x.OrderDate <= LatestDate).GroupBy(x => x.OrderID).Select(group => group.First()).ToList();
+            var listOfOrders = CustOrderList.Where(x => x.OrderDate >= EarliestDate && x.OrderDate <= LatestDate).GroupBy(x => x.OrderID).Select(group => group.First()).ToList();
+
+            var maxDate = LatestOrderDateInDB();
+            var minDate = EarliestOrderDateInDB();
+
+            if (listOfOrders.Count >=1)
+            {
+                maxDate = listOfOrders.Max(o => o.OrderDate);
+                minDate = listOfOrders.Min(o => o.OrderDate);
+            }
+
+            return (listOfOrders, minDate, maxDate);
         }
     }
 }

@@ -23,6 +23,8 @@ namespace NorthwindUI
         Customer selectedCustomer = new Customer();
         List<Order> ordersBySelectedCustomer = new();
 
+        
+
         //Set limits for date filters. Assumes static db
         public DateTime latestOrderDateInDB = NorthwindMethods.LatestOrderDateInDB();
         public DateTime earliestOrderDateInDB = NorthwindMethods.EarliestOrderDateInDB();
@@ -42,25 +44,27 @@ namespace NorthwindUI
 
             latestDatePicker.MinDate = earliestOrderDateInDB;
             latestDatePicker.MaxDate = latestOrderDateInDB;
-            latestDatePicker.Value = latestOrderDateInDB; 
+            latestDatePicker.Value = latestOrderDateInDB;
+
+            earlyFilterIconPictureBox.Visible = false;
+            lateFilterIconPictureBox.Visible = false;
+            clearFilterPictureBox.Visible = false;
         }
-        private void PopulateDataGridView() // Fills grid with orders from selected customer
+        private void ResetMinMaxDatesAndPickersToCustLimits()
         {
-            DataAccess db = new(); //db Must be instatiated to get data
-            ordersBySelectedCustomer = db.GetOrdersByCustomerID(selectedCustomer.CustomerID); //list <order>
+            if (customerNameTextBox.TextLength >= minCharsToEnter) //Ignored if there is no selected customer
+            {
+                earliestDatePicker.MinDate = selectedCustomer.EarliestOrderDate;
+                earliestDatePicker.MaxDate = selectedCustomer.LatestOrderDate;
+                earliestDatePicker.Value = selectedCustomer.EarliestOrderDate;
+                latestDatePicker.MinDate = selectedCustomer.EarliestOrderDate;
+                latestDatePicker.MaxDate = selectedCustomer.LatestOrderDate;
+                latestDatePicker.Value = selectedCustomer.LatestOrderDate;
+            }
 
-            List<Order> filteredOrders = NorthwindMethods.OrdersByCustIDAndDateFilter(ordersBySelectedCustomer, selectedCustomer, earliestDatePicker.Value, latestDatePicker.Value);
-
-            var columns = from order in filteredOrders //ordersBySelectedCustomer, selectes which data to show in grid
-                          orderby order.OrderID
-                          select new 
-                          {
-                              OrderID = order.OrderID,
-                              OrderDate = order.OrderDate,
-                              ShippedDate = order.ShippedDate,
-                              OrderValue = order.SumOfOrder.ToString("C"), // Calculated in Methods library
-                          };
-            ordersDataGridView.DataSource = columns.ToList();
+            earlyFilterIconPictureBox.Visible = false;
+            lateFilterIconPictureBox.Visible = false;
+            clearFilterPictureBox.Visible = false;
         }
         private void ClearCustomerFields()
         {
@@ -132,14 +136,49 @@ namespace NorthwindUI
         {
             DataAccess db = new DataAccess();
             ordersBySelectedCustomer = db.GetOrdersByCustomerID (selectedCustomer.CustomerID);
-            var filteredOrders = NorthwindMethods.OrdersByCustIDAndDateFilter(ordersBySelectedCustomer, selectedCustomer, earliestDatePicker.Value, latestDatePicker.Value);
+            (var filteredOrders, var minDate, var maxDate) = NorthwindMethods.OrdersByCustIDAndDateFilter(ordersBySelectedCustomer, selectedCustomer, earliestDatePicker.Value, latestDatePicker.Value);
 
             foreach (Order order in filteredOrders)
             {
                 string[] row = { order.OrderID, order.OrderDate.ToString("dd/MM/yy"), order.ShippedDate.ToString("dd/MM/yy"), order.SumOfOrder.ToString("C")};
-                var listViewItem = new ListViewItem(row);
+                //var listViewItem = new ListViewItem(row);
+            }
+            // Ensures that there are never no orders in the list:
+            if (earliestDatePicker.MaxDate >maxDate) 
+            {
+                earliestDatePicker.MaxDate = maxDate;
             }
 
+            if (latestDatePicker.MinDate < minDate)
+            {
+                latestDatePicker.MinDate = minDate;
+            }
+
+        }
+        private void PopulateDataGridView() // Fills grid with orders from selected customer
+        {
+            DataAccess db = new(); //db Must be instatiated to get data
+            ordersBySelectedCustomer = db.GetOrdersByCustomerID(selectedCustomer.CustomerID); //list <order>
+
+            (List<Order> filteredOrders, DateTime minDate, DateTime maxDate) = NorthwindMethods.OrdersByCustIDAndDateFilter(ordersBySelectedCustomer, selectedCustomer, earliestDatePicker.Value, latestDatePicker.Value);
+            // My< first tuple!
+
+            var columns = from order in filteredOrders //ordersBySelectedCustomer, selectes which data to show in grid
+                          orderby order.OrderID
+                          select new
+                          {
+                              OrderID = order.OrderID,
+                              OrderDate = order.OrderDate,
+                              ShippedDate = order.ShippedDate,
+                              OrderValue = order.SumOfOrder.ToString("C"), // Calculated in Methods library
+                          };
+            ordersDataGridView.DataSource = columns.ToList();
+
+            if(filteredOrders.Count >=1)
+            {
+
+                //MessageBox.Show($"{minDate} - {maxDate}");
+            }
         }
         private void FindCustomersByPartialName() // And populate customer list and fields for selected customer (1st by default)
         {
@@ -166,18 +205,7 @@ namespace NorthwindUI
             ResetMinMaxDatesAndPickersToDBLimits();
             ClearCustomerFields();
         }
-        private void ResetMinMaxDatesAndPickersToCustLimits()
-        {
-            if (customerNameTextBox.TextLength >= minCharsToEnter) //Ignored if there is no selected customer
-            {
-                earliestDatePicker.MinDate = selectedCustomer.EarliestOrderDate;
-                earliestDatePicker.MaxDate = selectedCustomer.LatestOrderDate;
-                earliestDatePicker.Value = selectedCustomer.EarliestOrderDate;
-                latestDatePicker.MinDate = selectedCustomer.EarliestOrderDate;
-                latestDatePicker.MaxDate = selectedCustomer.LatestOrderDate;
-                latestDatePicker.Value = selectedCustomer.LatestOrderDate;
-            }
-        }
+
 
 
         // ///////////////////// Form interaction methods /////////////////////
@@ -205,18 +233,16 @@ namespace NorthwindUI
             latestDatePicker.MinDate = earliestDatePicker.Value;
             UpdateOrdersList();
             PopulateDataGridView();
+            earlyFilterIconPictureBox.Visible=true;
+            clearFilterPictureBox.Visible = true;
         }
         private void LatestDatePicker_ValueChanged(object sender, EventArgs e)
         {
             earliestDatePicker.MaxDate = latestDatePicker.Value;
             UpdateOrdersList();
             PopulateDataGridView();
-        }
-        private void ClearFiltersBbutton_Click(object sender, EventArgs e)
-        {
-            ResetMinMaxDatesAndPickersToCustLimits();
-            UpdateOrdersList();
-            PopulateDataGridView();
+            lateFilterIconPictureBox.Visible = true;
+            clearFilterPictureBox.Visible = true;
         }
         private void OrdersDataGridView_DoubleClick(object sender, EventArgs e) // View order details
         {
@@ -228,10 +254,18 @@ namespace NorthwindUI
             OrderDetailsForm orderform = new(selectedCustomer, selectedOrder); //Calls form, passing parameters
             orderform.ShowDialog(); //Opens the form, not allowing access to other form whilst open
         }
-        private void showAllCustomersButton_Click(object sender, EventArgs e)
+        private void ShowAllCustomersButton_Click(object sender, EventArgs e)
         {
             customerNameTextBox.Text = "%%";
             // CustomerNameTextBox_TextChanged() takes care of the everything else
+        }
+
+        private void newCLearFilterPictureBox_Click(object sender, EventArgs e)
+        {
+            ResetMinMaxDatesAndPickersToCustLimits();
+            UpdateOrdersList();
+            PopulateDataGridView();
+            clearFilterPictureBox.Visible = false;
         }
     }
 }
