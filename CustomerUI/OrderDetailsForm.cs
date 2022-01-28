@@ -74,8 +74,8 @@ namespace NorthwindUI
                               OrderID = selectedOrder.OrderID,
                               ProductID = selectedOrder.ProductID,
                               ProductName = selectedOrder.ProductName,
-                              UnitPrice = selectedOrder.UnitPrice.ToString("C"),
                               Qty = selectedOrder.Quantity,
+                              UnitPrice = selectedOrder.UnitPrice.ToString("C"),
                               ExtendedPrice = selectedOrder.ExtendedPrice.ToString("C"),
                           };
             orderItemsDataGridView.DataSource = columns.ToList();

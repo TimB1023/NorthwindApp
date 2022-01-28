@@ -110,7 +110,7 @@ namespace NorthwindUI
 
                 ResetMinMaxDatesAndPickersToCustLimits();
 
-                PopulateDataGridView();
+                PopulateOrdersDataGridView();
 
             }
             else // No customers found based on user entry
@@ -155,7 +155,7 @@ namespace NorthwindUI
             }
 
         }
-        private void PopulateDataGridView() // Fills grid with orders from selected customer
+        private void PopulateOrdersDataGridView() // Fills grid with orders from selected customer
         {
             DataAccess db = new(); //db Must be instatiated to get data
             ordersBySelectedCustomer = db.GetOrdersByCustomerID(selectedCustomer.CustomerID); //list <order>
@@ -163,13 +163,14 @@ namespace NorthwindUI
             (List<Order> filteredOrders, DateTime minDate, DateTime maxDate) = NorthwindMethods.OrdersByCustIDAndDateFilter(ordersBySelectedCustomer, selectedCustomer, earliestDatePicker.Value, latestDatePicker.Value);
             // My< first tuple!
 
-            var columns = from order in filteredOrders //ordersBySelectedCustomer, selectes which data to show in grid
+            var columns = from order in filteredOrders //ordersBySelectedCustomer, selects which data to show in grid
                           orderby order.OrderID
                           select new
                           {
                               OrderID = order.OrderID,
                               OrderDate = order.OrderDate,
                               ShippedDate = order.ShippedDate,
+                              LineItems = order.LineItemCountOfOrder.ToString(),
                               OrderValue = order.SumOfOrder.ToString("C"), // Calculated in Methods library
                           };
             ordersDataGridView.DataSource = columns.ToList();
@@ -232,7 +233,7 @@ namespace NorthwindUI
         {
             latestDatePicker.MinDate = earliestDatePicker.Value;
             UpdateOrdersList();
-            PopulateDataGridView();
+            PopulateOrdersDataGridView();
             earlyFilterIconPictureBox.Visible=true;
             clearFilterPictureBox.Visible = true;
         }
@@ -240,7 +241,7 @@ namespace NorthwindUI
         {
             earliestDatePicker.MaxDate = latestDatePicker.Value;
             UpdateOrdersList();
-            PopulateDataGridView();
+            PopulateOrdersDataGridView();
             lateFilterIconPictureBox.Visible = true;
             clearFilterPictureBox.Visible = true;
         }
@@ -259,12 +260,11 @@ namespace NorthwindUI
             customerNameTextBox.Text = "%%";
             // CustomerNameTextBox_TextChanged() takes care of the everything else
         }
-
         private void newCLearFilterPictureBox_Click(object sender, EventArgs e)
         {
             ResetMinMaxDatesAndPickersToCustLimits();
             UpdateOrdersList();
-            PopulateDataGridView();
+            PopulateOrdersDataGridView();
             clearFilterPictureBox.Visible = false;
         }
     }

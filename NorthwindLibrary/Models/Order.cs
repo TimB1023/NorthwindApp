@@ -28,9 +28,8 @@ namespace NorthwindLibrary
         public string ShipCountry { get; set; }
         public string ShipPostalCode { get; set; }
         public string OrderID { get; set; } //Int in db
-
         public decimal SumOfOrder => NorthwindMethods.SumOfOrdersByOrder(CustomerID, OrderID);
-
+        public decimal LineItemCountOfOrder => NorthwindMethods.CountOfItemsByOrder(CustomerID, OrderID);
 
     }
 }

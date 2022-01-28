@@ -7,8 +7,22 @@ using System.Threading.Tasks;
 
 namespace NorthwindLibrary
 {
-    public class NorthwindMethods
+    public static class NorthwindMethods
     {
+        public static DateTime EarliestOrderDateInDB()
+        {
+            List<Order> allCustomerOrders = new();
+            DataAccess db = new DataAccess();
+            allCustomerOrders = db.GetAllOrderDates().ToList();
+            return allCustomerOrders.Min(x => x.OrderDate);
+        }
+        public static DateTime LatestOrderDateInDB()
+        {
+            List<Order> allCustomerOrders = new();
+            DataAccess db = new DataAccess();
+            allCustomerOrders = db.GetAllOrderDates().ToList();
+            return allCustomerOrders.Max(x => x.OrderDate);
+        }
         public static decimal SumOfOrdersByCustomerID(string CustomerID)
         {
             List<Order> selectedCustomerOrders = new();
@@ -21,29 +35,6 @@ namespace NorthwindLibrary
             //    sumOfOrders += order.ExtendedPrice;
             //}
             return selectedCustomerOrders.Sum(x => x.ExtendedPrice);
-        }
-        public static decimal SumOfOrdersByOrder(string CustomerID, string OrderID)
-        {
-            List<Order> selectedCustomerOrders = new();
-            DataAccess db = new DataAccess();
-            selectedCustomerOrders = db.GetOrdersByCustomerID(CustomerID).ToList();
-            //I feel I should be able to combine these into one, but...
-            var items = selectedCustomerOrders.Where(x => x.OrderID == OrderID).ToList();
-            return items.Sum(x => x.ExtendedPrice);
-        }
-        public static DateTime EarliestOrderDateInDB()
-        {
-            List<Order> allCustomerOrders = new();
-            DataAccess db = new DataAccess();
-            allCustomerOrders = db.GetAllOrderDates().ToList();
-            return allCustomerOrders.Min(x => x.OrderDate);
-        }
-        public static DateTime LatestOrderDateInDB()
-        {
-                List<Order> allCustomerOrders = new();
-                DataAccess db = new DataAccess();
-                allCustomerOrders = db.GetAllOrderDates().ToList();
-                return allCustomerOrders.Max(x => x.OrderDate);
         }
         public static DateTime EarliestOrderDateByCustomerID(string CustomerID)
         {
@@ -76,13 +67,31 @@ namespace NorthwindLibrary
             var maxDate = LatestOrderDateInDB();
             var minDate = EarliestOrderDateInDB();
 
-            if (listOfOrders.Count >=1)
+            if (listOfOrders.Count >= 1)
             {
                 maxDate = listOfOrders.Max(o => o.OrderDate);
                 minDate = listOfOrders.Min(o => o.OrderDate);
             }
 
             return (listOfOrders, minDate, maxDate);
+        }
+        public static decimal SumOfOrdersByOrder(string CustomerID, string OrderID)
+        {
+            List<Order> selectedCustomerOrders = new();
+            DataAccess db = new DataAccess();
+            selectedCustomerOrders = db.GetOrdersByCustomerID(CustomerID).ToList();
+            //I feel I should be able to combine these into one, but...
+            var items = selectedCustomerOrders.Where(x => x.OrderID == OrderID).ToList();
+            return items.Sum(x => x.ExtendedPrice);
+        }
+        public static decimal CountOfItemsByOrder(string CustomerID, string OrderID)
+        {
+            List<Order> selectedCustomerOrders = new();
+            DataAccess db = new DataAccess();
+            selectedCustomerOrders = db.GetOrdersByCustomerID(CustomerID).ToList();
+            //I feel I should be able to combine these into one, but...
+            var items = selectedCustomerOrders.Where(x => x.OrderID == OrderID).ToList();
+            return items.Count;
         }
     }
 }

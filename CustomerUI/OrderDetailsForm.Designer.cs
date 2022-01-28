@@ -299,7 +299,7 @@ namespace NorthwindUI
             this.Controls.Add(this.customerNameLabel);
             this.Name = "OrderDetailsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "OrderDetails";
+            this.Text = "S";
             ((System.ComponentModel.ISupportInitialize)(this.orderItemsDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
