@@ -5,8 +5,75 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NorthwindWPFUI.Views"
         mc:Ignorable="d"
-        Title="NWMainView" Height="450" Width="800">
+        Title="Northwind Customers" Height="450" Width="800" WindowStartupLocation="CenterScreen" 
+        MinWidth="600" MinHeight="800">
+
+
     <Grid>
-        
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="auto" MinWidth="250"/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="auto" MinWidth="150"/>
+            <ColumnDefinition Width="auto" MinWidth="250"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+
+
+        </Grid.ColumnDefinitions>
+
+        <!-- Row 1 -->
+        <TextBlock Text="Customer Selection"
+                   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" 
+                   FontSize="22" HorizontalAlignment="Center"/>
+
+        <!-- Row 2 -->
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical">
+            <TextBlock Text="Enter text to filter companies by name:"/>
+            <TextBox x:Name="PartialSearchString"></TextBox>
+            <TextBlock Text="Max ordres:"/>
+            <TextBlock Text="{Binding MaxRevenue}"/>
+        </StackPanel>
+
+        <!-- Row 3 -->
+        <DataGrid Grid.Row="3" Grid.Column="1" 
+                  ItemsSource="{Binding Customers}"
+                  MinHeight="150"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False" HorizontalGridLinesBrush="LightGray" 
+                  VerticalGridLinesBrush="LightGray" Margin="5,0,5,0" MaxHeight="450">
+            <DataGrid.Columns>
+                <!--Company Name Column-->
+                <DataGridTextColumn Header ="Company" Binding="{Binding CompanyName}"/>
+                <!--Revenue column, Figure and Bar-->
+                <DataGridTemplateColumn MinWidth="80" Header="Revenue" CanUserSort="True" SortMemberPath="SumOfOrders">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <ProgressBar Background="Transparent"
+                                             Foreground="LightGreen"
+                                             Visibility="Visible"
+                                             Minimum="0" 
+                                             Maximum="{Binding Path=MaxOrdersByAnyCustomer}"
+                                             Value="{Binding Path=SumOfOrders, Mode=OneWay}"/>
+                                <TextBlock Text="{Binding SumOfOrders, StringFormat='#,###.00'}" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
     </Grid>
 </Window>

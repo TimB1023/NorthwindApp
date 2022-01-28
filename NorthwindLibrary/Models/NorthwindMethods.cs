@@ -9,6 +9,15 @@ namespace NorthwindLibrary
 {
     public static class NorthwindMethods
     {
+        public static Decimal MaxRevenueByAnyCustomer()
+        {
+            List<Customer> AllCustomers = new();
+            DataAccess db = new DataAccess();
+            AllCustomers = db.GetCustomers("").ToList();
+            return AllCustomers.Max(x => x.SumOfOrders);
+        }
+
+
         public static DateTime EarliestOrderDateInDB()
         {
             List<Order> allCustomerOrders = new();

@@ -26,6 +26,8 @@ namespace NorthwindLibrary
         }
         public decimal OrdersToDate { get; set; }
 
+        public decimal SumOfOrders => NorthwindMethods.SumOfOrdersByCustomerID(CustomerID);
+
         public DateTime EarliestOrderDate
         {
             get { return NorthwindMethods.EarliestOrderDateByCustomerID(CustomerID); }
@@ -33,5 +35,10 @@ namespace NorthwindLibrary
         }
 
         public DateTime LatestOrderDate => NorthwindMethods.LatestOrderDateByCustomerID(CustomerID);
+
+        //public decimal SumOfOrders
+
+        public decimal MaxOrdersByAnyCustomer => NorthwindMethods.MaxRevenueByAnyCustomer(); // Needed here to be able to include in the datagrid
+        
     }
 }
