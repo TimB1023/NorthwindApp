@@ -36,18 +36,19 @@
         <TextBlock Text="Customer Selection"
                    Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" 
                    FontSize="22" HorizontalAlignment="Center"/>
-
+        
+        
         <!-- Row 2 -->
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical">
             <TextBlock Text="Enter text to filter companies by name:"/>
             <TextBox x:Name="PartialSearchString"></TextBox>
-            <TextBlock Text="Max ordres:"/>
-            <TextBlock Text="{Binding MaxRevenue}"/>
+            <TextBlock Text=""/>
         </StackPanel>
+        
 
         <!-- Row 3 -->
         <DataGrid Grid.Row="3" Grid.Column="1" 
-                  ItemsSource="{Binding Customers}"
+                  ItemsSource="{Binding FilteredCustomers}"
                   MinHeight="150"
                   IsReadOnly="True"
                   AutoGenerateColumns="False" HorizontalGridLinesBrush="LightGray" 
@@ -57,12 +58,13 @@
                 <DataGridTextColumn Header ="Company" Binding="{Binding CompanyName}"/>
                 <!--Revenue column, Figure and Bar-->
                 <DataGridTemplateColumn MinWidth="80" Header="Revenue" CanUserSort="True" SortMemberPath="SumOfOrders">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate >
                             <Grid>
                                 <ProgressBar Background="Transparent"
                                              Foreground="LightGreen"
                                              Visibility="Visible"
+                                             BorderThickness="0"
                                              Minimum="0" 
                                              Maximum="{Binding Path=MaxOrdersByAnyCustomer}"
                                              Value="{Binding Path=SumOfOrders, Mode=OneWay}"/>
@@ -73,7 +75,5 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-
     </Grid>
 </Window>

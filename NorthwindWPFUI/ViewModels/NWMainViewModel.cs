@@ -5,41 +5,37 @@ using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using NorthwindLibrary;
+using System.ComponentModel;
 
-namespace NorthwindWPFUI.ViewModels
+namespace NorthwindWPFUI.ViewModels 
 {
-    public class NWMainViewModel
+    public class NWMainViewModel : Conductor<object>
     {
         public BindableCollection<Customer> Customers { get; set; }
-
-
+        public BindableCollection<Customer> FilteredCustomers 
+        { 
+            get
+            {
+                if (!String.IsNullOrEmpty(PartialSearchString))
+                {
+                    DataAccess da = new();
+                    // This uses a BindableCollection function to convert List<> to a bindable collection:
+                    BindableCollection<Customer> _filteredCustomers = new BindableCollection<Customer>(da.GetCustomers(PartialSearchString));
+                    return _filteredCustomers;
+                }
+                else
+                {
+                    return Customers;
+                }
+            }
+            set { } 
+        }
+        //======================= CONSTRUCTOR =============================
         public NWMainViewModel()
         {
             DataAccess da = new();
             Customers = new BindableCollection<Customer>(da.GetCustomers(""));
         }
-
-        private Customer _selectedCustomer;
-
-        public Customer SelectedCustomer
-        {
-            get { return _selectedCustomer; }
-            set { _selectedCustomer = value; }
-        }
-
-
-        //private DateTime _earliestPickerMinDate;
-
-        //public Decimal MaxRevenueByCustomer
-        //{
-        //    get { return NorthwindLibrary.NorthwindMethods.MaxRevenueByAnyCustomer(); }
-        //}
-
-        public Decimal MyDecimal
-        {
-            get { return 20; }
-        }
-
 
         public decimal MaxRevenue
         {
@@ -47,7 +43,37 @@ namespace NorthwindWPFUI.ViewModels
 
         }
 
+        private string _partialSearchString;
 
+        public string PartialSearchString
+        {
+            get { return _partialSearchString; }
+            set {
+                _partialSearchString = value;
+                NotifyOfPropertyChange(() => PartialSearchString);
+                NotifyOfPropertyChange(() => FilteredCustomers);
+                
+            }
+        }
+
+
+
+
+
+
+
+
+
+        private Customer _selectedCustomer;
+        public Customer SelectedCustomer
+        {
+            get { return _selectedCustomer; }
+            set
+            {
+                _selectedCustomer = value;
+                NotifyOfPropertyChange(() => SelectedCustomer);
+            }
+        }
 
         //public DateTime EarliestPickerMinDate
         //{
@@ -55,7 +81,12 @@ namespace NorthwindWPFUI.ViewModels
         //    set { _earliestPickerMinDate = value; }
         //}
 
+        //private DateTime _earliestPickerMinDate;
 
+        //public Decimal MaxRevenueByCustomer
+        //{
+        //    get { return NorthwindLibrary.NorthwindMethods.MaxRevenueByAnyCustomer(); }
+        //}
 
 
 
