@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NorthwindWPFUI.Views"
         mc:Ignorable="d"
-        Title="Northwind Customers" Height="450" Width="800" WindowStartupLocation="CenterScreen" 
-        MinWidth="600" MinHeight="800">
+        Title="Northwind Customers" Height="450" Width="700" WindowStartupLocation="CenterScreen" 
+         MinHeight="800">
 
 
     <Grid>
@@ -22,16 +22,14 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="auto" MinWidth="250"/>
+            <ColumnDefinition Width="*" MinWidth="150"/>
             <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="auto" MinWidth="150"/>
             <ColumnDefinition Width="auto" MinWidth="250"/>
-            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
 
 
         </Grid.ColumnDefinitions>
-
+        <!--Column 1-->
         <!-- Row 1 -->
         <TextBlock Text="Customer Selection"
                    Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" 
@@ -52,12 +50,17 @@
                   MinHeight="150"
                   IsReadOnly="True"
                   AutoGenerateColumns="False" HorizontalGridLinesBrush="LightGray" 
-                  VerticalGridLinesBrush="LightGray" Margin="5,0,5,0" MaxHeight="450">
+                  VerticalGridLinesBrush="LightGray" Margin="5,0,5,0" MaxHeight="450"
+                  SelectedItem="{Binding Path=SelectedCustomer, Mode=OneWayToSource}"
+                  SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  Width="auto"
+                  SelectedIndex="0"
+                  >
             <DataGrid.Columns>
                 <!--Company Name Column-->
-                <DataGridTextColumn Header ="Company" Binding="{Binding CompanyName}"/>
+                <DataGridTextColumn Width ="auto" MinWidth ="150" Header ="Company" Binding="{Binding CompanyName}"/>
                 <!--Revenue column, Figure and Bar-->
-                <DataGridTemplateColumn MinWidth="80" Header="Revenue" CanUserSort="True" SortMemberPath="SumOfOrders">
+                <DataGridTemplateColumn Width="*" MinWidth="100" Header="Revenue" CanUserSort="True" SortMemberPath="SumOfOrders">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
                             <Grid>
@@ -75,5 +78,38 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        
+        <!--Column 2-->
+        <!--Row 1-->
+        <!--Details of selected customer-->
+        <StackPanel Grid.Row="3" Grid.Column="3" Orientation="Vertical">
+            <!--Contact name and title-->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Contact" Width="100"/>
+                <Border BorderBrush="#FFABADB3" BorderThickness="1" >
+                    <StackPanel Orientation="Vertical" Width="200">
+                        <TextBox x:Name="SelectedCustomer_ContactName"  BorderThickness="0,0,0,0"></TextBox>
+                        <TextBox x:Name="SelectedCustomer_ContactTitle" BorderThickness="0,0,0,0">></TextBox>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <!--Contact Phone-->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Phone" Width="100"/>
+                <TextBox x:Name="SelectedCustomer_Phone" Width="200" />
+            </StackPanel>
+            <!--Address-->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Address" Width="100"/>
+                <TextBox Text="{Binding SelectedCustomer.AddressBlock, Mode=OneWay}" Width="200" />
+            </StackPanel>
+            <!--Revenue Generated-->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Revenue to date" Width="100"/>
+                <TextBox Text="{Binding SelectedCustomer.SumOfOrders, Mode=OneWay, StringFormat='#,###.00'}" Width="200" />
+            </StackPanel>
+        </StackPanel>
+
+
     </Grid>
 </Window>

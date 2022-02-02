@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace NorthwindLibrary
@@ -23,6 +24,14 @@ namespace NorthwindLibrary
         {
             get
             { return $"{CompanyName} ({CustomerID})"; }
+        }
+        public string AddressBlock
+        {
+            get
+            {
+                string BlockText = $"{Address}\n{City}\n{Region}\n{PostalCode}\n{Country}"; // Combines address elements into a block
+                return Regex.Replace(BlockText, "\n\n", "\n"); // Removes double new line, i.e. where there is an empty line such as with Region
+            }
         }
         public decimal OrdersToDate { get; set; }
 
