@@ -30,12 +30,18 @@ namespace NorthwindWPFUI.ViewModels
             }
             set { } 
         }
+        
+
+        public CustomerOrdersViewModel CustomerOrdersViewModel { get; set; }
+
         //======================= CONSTRUCTOR =============================
         public NWMainViewModel()
         {
             DataAccess da = new();
             Customers = new BindableCollection<Customer>(da.GetCustomers(""));
+            CustomerOrdersViewModel = new CustomerOrdersViewModel(SelectedCustomer);
         }
+
 
         public decimal MaxRevenue
         {
@@ -56,12 +62,13 @@ namespace NorthwindWPFUI.ViewModels
             }
         }
 
+     
 
 
-
-
-
-
+    //public async Task LoadCustomerOrders()
+    //    {
+    //        await ActivateItemAsync(new CustomerOrdersViewModel(SelectedCustomer));
+    //    }
 
 
         private Customer _selectedCustomer;
@@ -72,8 +79,13 @@ namespace NorthwindWPFUI.ViewModels
             {
                 _selectedCustomer = value;
                 NotifyOfPropertyChange(() => SelectedCustomer);
+                NotifyOfPropertyChange(() => CustomerOrdersViewModel);
             }
         }
+
+        
+        
+        
 
         //public DateTime EarliestPickerMinDate
         //{

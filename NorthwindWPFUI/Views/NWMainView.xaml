@@ -17,6 +17,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
@@ -55,6 +56,7 @@
                   SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   Width="auto"
                   SelectedIndex="0"
+                  HeadersVisibility="Column"
                   >
             <DataGrid.Columns>
                 <!--Company Name Column-->
@@ -110,6 +112,12 @@
             </StackPanel>
         </StackPanel>
 
-
+        <!--Row 4-->
+        <!--Orders by selected customer-->
+        <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3">
+            <TextBlock/>
+            <ContentControl  x:Name="CustomerOrdersViewModel" />
+        </StackPanel>
+        
     </Grid>
 </Window>
