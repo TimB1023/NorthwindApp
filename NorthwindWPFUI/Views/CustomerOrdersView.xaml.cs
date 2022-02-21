@@ -23,6 +23,7 @@ namespace NorthwindWPFUI.Views
         public CustomerOrdersView()
         {
             InitializeComponent();
+            
         }
     }
 }

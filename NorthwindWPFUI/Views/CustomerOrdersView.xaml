@@ -3,43 +3,46 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NorthwindWPFUI.Views"
-             mc:Ignorable="d" Background="Green"
+             xmlns:local="clr-namespace:NorthwindWPFUI.ViewModels" d:DataContext="{d:DesignInstance Type=local:CustomerOrdersViewModel}"
+             mc:Ignorable="d" Background="LightGray"
              d:DesignHeight="450" d:DesignWidth="800">
+    <!--<UserControl.DataContext>
+        <local:CustomerOrdersViewModel/>
+    </UserControl.DataContext>-->
     <Grid>
-        <DataGrid Grid.Row="3" Grid.Column="1" 
-                  ItemsSource="{Binding ordersBySelectedCustomer}"
-                  MinHeight="150"
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="*" MinWidth="150"/>
+
+        </Grid.ColumnDefinitions>
+        
+        <DataGrid Grid.Row="2" Grid.Column="1" 
+                  ItemsSource="{Binding FilteredOrders}"
+                  MinHeight="100"
                   IsReadOnly="True"
                   AutoGenerateColumns="False" HorizontalGridLinesBrush="LightGray" 
-                  VerticalGridLinesBrush="LightGray" Margin="5,0,5,0" MaxHeight="450"
-                  SelectedItem="{Binding Path=SelectedCustomer, Mode=OneWayToSource}"
-                  SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  VerticalGridLinesBrush="LightGray" Margin="0,0,0,0" MaxHeight="200"
+                  
                   Width="auto"
                   SelectedIndex="0"
-                  HeadersVisibility="Column"
+                  HeadersVisibility="Column" VerticalScrollBarVisibility="Visible"
                   
                   >
             <DataGrid.Columns>
                 <!--Company Name Column-->
-                <DataGridTextColumn Width ="auto" MinWidth ="150" Header ="Company" Binding="{Binding OrderID}"/>
-                <!--Revenue column, Figure and Bar-->
-                <DataGridTemplateColumn Width="*" MinWidth="100" Header="Revenue" CanUserSort="True" SortMemberPath="SumOfOrders">
-                    <DataGridTemplateColumn.CellTemplate >
-                        <DataTemplate >
-                            <Grid>
-                                <ProgressBar Background="Transparent"
-                                             Foreground="LightGreen"
-                                             Visibility="Visible"
-                                             BorderThickness="0"
-                                             Minimum="0" 
-                                             Maximum="{Binding Path=MaxOrdersByAnyCustomer}"
-                                             Value="{Binding Path=SumOfOrders, Mode=OneWay}"/>
-                                <TextBlock Text="{Binding SumOfOrders, StringFormat='#,###.00'}" />
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Width ="auto" Header ="Order ID" Binding="{Binding OrderID}"/>
+                <DataGridTextColumn Width ="auto" Header ="Order Date" Binding="{Binding OrderDate}"/>
+                <DataGridTextColumn Width ="auto" Header ="Shipped Date" Binding="{Binding ShippedDate}"/>
+                <DataGridTextColumn Width ="auto" Header ="Line Items" Binding="{Binding LineItemCountOfOrder}"/>
+                <DataGridTextColumn Width ="auto" Header ="Order Value" Binding="{Binding SumOfOrder}"/>
+                
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

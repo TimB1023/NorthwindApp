@@ -41,12 +41,20 @@ namespace NorthwindLibrary
                 return output;
             }
         }
+
+        public List<Order> GetTop100Orders()
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionHelper.CnnVal("NorthwindDB")))
+            {
+                var output = connection.Query<Order>("dbo.GetAllCustomerOrders").ToList(); //Actually only gets top 100 as this list should only be seen very briafly on startup
+                return output;
+            }
+        }
         public List<Order> GetOrdersByCustomerID(string customerID)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionHelper.CnnVal("NorthwindDB")))
             {
-                var output = connection.Query<Order>("dbo.GetCustomerOrdersByCustomerID @CustomerID", new { CustomerID = customerID }).ToList();
-
+                var  output = connection.Query<Order>("dbo.GetCustomerOrdersByCustomerID @CustomerID", new { CustomerID = customerID }).ToList();
                 return output;
             }
         }

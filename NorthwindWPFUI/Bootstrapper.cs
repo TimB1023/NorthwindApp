@@ -12,7 +12,6 @@ namespace NorthwindWPFUI
     public class Bootstrapper : BootstrapperBase
     {
         public Bootstrapper() => Initialize();
-        //public decimal x = NorthwindLibrary.NorthwindMethods.MaxRevenueByAnyCustomer();
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
