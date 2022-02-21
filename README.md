@@ -1,4 +1,6 @@
 # NorthwindApp
+Update: Now working on WPF version using Caliburn.Micro to acheive MVVM pattern
+
 A little app to help learn using Winforms and Data Access.
 Based on the MS Northwinds database
 
