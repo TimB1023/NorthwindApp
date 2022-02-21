@@ -24,7 +24,7 @@ namespace NorthwindWPFUI.ViewModels
         //====================== Methods ================
         private async Task LoadNewOrdersListAsync()
         {
-            await ActivateItemAsync(new CustomerOrdersViewModel());
+            await ActivateItemAsync(new CustomerOrdersViewModel(SelectedCustomer));
         }
         //===================== Full Properties ===============
         private Customer _selectedCustomer;

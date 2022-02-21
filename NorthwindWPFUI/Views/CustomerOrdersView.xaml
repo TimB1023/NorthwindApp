@@ -33,15 +33,14 @@
                   Width="auto"
                   SelectedIndex="0"
                   HeadersVisibility="Column" VerticalScrollBarVisibility="Visible"
-                  
                   >
             <DataGrid.Columns>
                 <!--Company Name Column-->
-                <DataGridTextColumn Width ="auto" Header ="Order ID" Binding="{Binding OrderID}"/>
-                <DataGridTextColumn Width ="auto" Header ="Order Date" Binding="{Binding OrderDate}"/>
-                <DataGridTextColumn Width ="auto" Header ="Shipped Date" Binding="{Binding ShippedDate}"/>
-                <DataGridTextColumn Width ="auto" Header ="Line Items" Binding="{Binding LineItemCountOfOrder}"/>
-                <DataGridTextColumn Width ="auto" Header ="Order Value" Binding="{Binding SumOfOrder}"/>
+                <DataGridTextColumn Width ="*" MaxWidth ="70" Header ="Order ID" Binding="{Binding OrderID}"/>
+                <DataGridTextColumn Width ="*" Header ="Order Date" Binding="{Binding OrderDate, StringFormat='dd/MM/yyyy'}"/>
+                <DataGridTextColumn Width ="*" Header ="Shipped Date" Binding="{Binding ShippedDate, StringFormat='dd/MM/yyyy'}"/>
+                <DataGridTextColumn Width ="*" MaxWidth ="60" Header ="Line Items" Binding="{Binding LineItemCountOfOrder}"/>
+                <DataGridTextColumn Width ="*" Header ="Order Value" Binding="{Binding SumOfOrder,StringFormat='#,###.00'}"/>
                 
             </DataGrid.Columns>
         </DataGrid>

@@ -12,27 +12,28 @@ namespace NorthwindWPFUI.ViewModels
     public class CustomerOrdersViewModel : Screen 
     {
         //======================= CONSTRUCTOR =============================
-        public CustomerOrdersViewModel()
+        public CustomerOrdersViewModel(Customer MySelectedCustomer)
         {
             DataAccess da = new();
-            Orders = new BindableCollection<Order>(da.GetTop100Orders()); //Default collection before customer selected
+            SelectedCustomer = MySelectedCustomer;
+            Orders = new BindableCollection<Order>(da.GetOrdersByCustomerID("{SelectedCustomer.CustomerID}")); 
         }
        
         public BindableCollection<Order> Orders { get; set; }
 
-        private Customer _selectedCustomer; 
+        private Customer _selectedCustomer;
         public Customer SelectedCustomer
         {
-            get { return  _selectedCustomer; } //NWMainViewModel.SharedSelectedCustomer
+            get { return _selectedCustomer; } //NWMainViewModel.SharedSelectedCustomer
             set
             {
                 _selectedCustomer = value;
-                MessageBox.Show("New selected customer"); // Never gets run
+                //MessageBox.Show("New selected customer"); // Never gets run
                 NotifyOfPropertyChange(() => SelectedCustomer);
                 NotifyOfPropertyChange(() => FilteredOrders);
             }
         }
-        
+
         public BindableCollection<Order> Top100Orders
         {
             get
@@ -53,12 +54,12 @@ namespace NorthwindWPFUI.ViewModels
                     // This uses a BindableCollection function from CB to convert List<> to a bindable collection:
                     BindableCollection<Order> _filteredOrders = new BindableCollection<Order>(da.GetOrdersByCustomerID(SelectedCustomer.CustomerID));
                     var count = _filteredOrders.Count;
-                    MessageBox.Show($"ID: {SelectedCustomer.CustomerID}, Orders: {count}"); //never run
+                    //MessageBox.Show($"ID: {SelectedCustomer.CustomerID}, Orders: {count}"); //never run
                     return _filteredOrders;
                 }
                 else
                 {
-                    MessageBox.Show("Top100 (Selected Customer was null");
+                    //MessageBox.Show("Top100 (Selected Customer was null");
                     return Top100Orders;
                 }
             }
